@@ -1,0 +1,54 @@
+.logo {
+    width: 250px;
+    height: 65px;
+}
+
+nav {
+    background-color: white;
+}
+
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sign-up {
+    background: linear-gradient(to right, #a120ea, #bd2abb, #ce219e, #fe007a);
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.sign-up:hover {
+    padding: 11px;
+}
+
+.login {
+    font-size: 15px;
+    padding: 10px;
+    margin: 6px;
+    background-color: white;
+    border: none;
+    font-weight: 500;
+
+}
+
+.login:hover {
+    color: #a120ea;
+    background-color: rgba(217, 193, 205, 0.17)
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#navbarNav {
+    justify-content: flex-end;
+}
+
+.navbar-buttons {
+    margin: 5px;
+}
