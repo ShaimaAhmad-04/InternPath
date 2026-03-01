@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+ .colored-background {
+    background: linear-gradient(to right, #a120ea, #bd2abb, #ce219e, #fe007a);
+    color: white;
+    /* font-weight: bold; */
+} /*
+    button {
+    border: none !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+
+}
+*/
+
+.btn--primary {
+    background: linear-gradient(to right, #a120ea, #bd2abb, #ce219e, #fe007a);
+    color: white;
+    border: none;
+}
+
+.btn--primary:hover {
+    opacity: 0.9;
+}
+
+.btn--secondary {
+    background-color: white;
+    color: black;
+    border:none
+}
+
+.btn--secondary:hover {
+    color: #a120ea;
+    background-color: rgba(217, 193, 205, 0.17);
+}
+
+.btn{
+    font-weight: 500;
+    border: none;
+}
+
+html {
+    /* scroll-behavior: smooth; */
+
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}

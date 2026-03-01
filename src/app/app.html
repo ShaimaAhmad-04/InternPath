@@ -1,16 +1,26 @@
-<nav class="navbar navbar-expand-lg navbar-expand-md navbar-expand-sm navbar-expand navbar-light ">
-  <div class="logo">
-    <a class="navbar-brand" href="#">
-      <img src="assets/images/Logo2.png" class="logo-image">
+<nav class="navbar">
+
+  <div class="navbar__brand fade-up" appReveal>
+    <a href="#">
+      <img src="assets/images/Logo2.png"
+        class="navbar__brand-logo">
     </a>
   </div>
 
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <div class = "navbar-buttons">
-      <button type="button" class="btn btn-light login"
-        style="font-weight:400;">Login</button>
-    <button type="button" class="btn btn-light sign-up">Get
-        Started</button>
-      </div>
+  <div class="navbar__actions">
+
+    <button type="button"
+      class="btn btn--secondary">
+      Login
+    </button>
+
+    <button type="button"
+      class="btn btn--primary">
+      Get Started
+    </button>
+
   </div>
+
 </nav>
+
+<router-outlet></router-outlet>
