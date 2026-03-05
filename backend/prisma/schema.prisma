@@ -1,14 +1,159 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  firstName   String   @db.VarChar(50)
+  lastName    String?  @db.VarChar(50)
+  email       String   @unique @db.VarChar(255)
+  password    String   @db.VarChar(255)
+  phoneNumber String   @db.VarChar(20)
+  role        Int
+  company     Company?
+  student     Student?
+}
+
+model Student {
+  userId             Int                 @id
+  major              Int?
+  university         String?             @db.VarChar(100)
+  experience         String?             @db.VarChar(255)
+  gpa                Decimal?
+  graduationYear     DateTime?
+  linkedinUrl        String?             @db.VarChar(255)
+  githubUrl          String?             @db.VarChar(255)
+  certifications     String?
+  cvUrl              String?             @db.VarChar(255)
+  applications       Application[]
+  roadmaps           Roadmap[]
+  user               User                @relation(fields: [userId], references: [id])
+  studentInternships StudentInternship[]
+  studentSkills      StudentSkill[]
+}
+
+model Company {
+  userId           Int               @id
+  name             String            @db.VarChar(120)
+  description      String?
+  industry         String?           @db.VarChar(100)
+  website          String?           @db.VarChar(255)
+  verified         Boolean           @default(false)
+  user             User              @relation(fields: [userId], references: [id])
+  companyLocations CompanyLocation[]
+  internships      Internship[]
+}
+
+model Skill {
+  id               Int               @id @default(autoincrement())
+  name             String            @unique @db.VarChar(100)
+  internshipSkills InternshipSkill[]
+  studentSkills    StudentSkill[]
+}
+
+model Internship {
+  id                  Int                  @id @default(autoincrement())
+  companyId           Int
+  title               String               @db.VarChar(150)
+  description         String?              @db.VarChar(200)
+  postDate            DateTime             @db.Date
+  submissionDeadline  DateTime             @db.Date
+  duration            String?              @db.VarChar(50)
+  location            Location
+  isPaid              Boolean
+  status              Boolean
+  applications        Application[]
+  company             Company              @relation(fields: [companyId], references: [userId])
+  internshipLocations InternshipLocation[]
+  internshipSkills    InternshipSkill[]
+  studentInternships  StudentInternship[]
+}
+
+model InternshipSkill {
+  internshipId  Int
+  skillId       Int
+  matchingScore Int?
+  date          DateTime?  @db.Date
+  internship    Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  skill         Skill      @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([internshipId, skillId])
+}
+
+model Application {
+  id           Int        @id @default(autoincrement())
+  studentId    Int
+  internshipId Int
+  status       Int
+  internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  student      Student    @relation(fields: [studentId], references: [userId], onDelete: Cascade)
+}
+
+model Roadmap {
+  roadmapId       Int           @id @default(autoincrement())
+  studentId       Int
+  desiredPosition String?       @db.VarChar(100)
+  generatedAt     DateTime?
+  student         Student       @relation(fields: [studentId], references: [userId], onDelete: Cascade)
+  nodes           RoadmapNode[]
+}
+
+model RoadmapNode {
+  nodeId     Int
+  roadmapId  Int
+  title      String  @db.VarChar(150)
+  orderIndex Int
+  roadmap    Roadmap @relation(fields: [roadmapId], references: [roadmapId], onDelete: Cascade)
+
+  @@id([nodeId, roadmapId])
+}
+
+model StudentInternship {
+  studentId    Int
+  internshipId Int
+  internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  student      Student    @relation(fields: [studentId], references: [userId], onDelete: Cascade)
+
+  @@id([studentId, internshipId])
+}
+
+model StudentSkill {
+  studentId  Int
+  skillId    Int
+  experience Int?
+  skill      Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  student    Student @relation(fields: [studentId], references: [userId], onDelete: Cascade)
+
+  @@id([studentId, skillId])
+}
+
+model CompanyLocation {
+  companyId Int
+  city      Int
+  country   Int
+  street    String? @db.VarChar(50)
+  company   Company @relation(fields: [companyId], references: [userId], onDelete: Cascade)
+
+  @@id([companyId, city, country])
+}
+
+model InternshipLocation {
+  internshipId Int
+  city         Int
+  country      Int
+  street       String?    @db.VarChar(50)
+  internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+
+  @@id([internshipId, city, country])
+}
+
+enum Location {
+  Remote
+  In_site
+  Hybrid
 }
