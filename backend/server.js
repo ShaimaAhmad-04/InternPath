@@ -8,6 +8,15 @@ app.use(cors())
 app.use(express.json())
 
 
+app.get('/',(req,res)=>{
+  res.send('Backend is working')
+})
+
+app.get('/api/test',(req,res)=>{
+  res.json({message: "API works"})
+})
+
+
 
 app.listen(PORT,() => {
   console.log(`Server running on http://localhost:${PORT}`);
