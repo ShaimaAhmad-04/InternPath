@@ -9,6 +9,6 @@ import { Reveal } from "../../Directives/reveal";
   styleUrl: './homepage.css',
 })
 export class Homepage {
-  
 
+ 
 }
