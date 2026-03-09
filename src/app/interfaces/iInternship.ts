@@ -6,7 +6,7 @@ export interface Internship {
   postDate: Date;
   submissionDeadline: Date;
   duration?: string;
-  location: 'Remote' | 'In-site' | 'Hybrid';
+  location: number;
+  active: boolean;
   isPaid: boolean;
-  status: boolean; // true = active
 }

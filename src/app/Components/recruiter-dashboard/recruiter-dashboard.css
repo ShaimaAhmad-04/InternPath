@@ -52,7 +52,7 @@ body {
 .background-card {
     background-color: #dac9e461;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    
+
 
 }
 
@@ -169,6 +169,10 @@ body {
     color: #1a8f3c;
 }
 
+.rejected {
+    background: #fde0e0;
+    color: #c0392b;
+}
 
 /* =========================
    Applicants Container
@@ -252,4 +256,24 @@ body {
     border: none;
     background: transparent;
     cursor: pointer;
+}
+
+.linkedin-btn:hover {
+    background-color: #006192;
+    color: white;
+}
+
+.linkedin-btn:hover a {
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+.skill-container {
+    cursor: pointer;
+}
+.skill-container:hover{
+    background-color: #8080804a;
 }

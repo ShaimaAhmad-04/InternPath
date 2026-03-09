@@ -13,5 +13,6 @@ export interface Student extends User {
     gitHubUrl: string | null;
     certifications: string[];
     cvUrl: string | null;
+    phone:string | null
     studentSkills?: student_skill[];
 }

@@ -4,7 +4,8 @@
     <div class="row mb-4">
         <div class="col-12 header">
             <h1 class="mb-0">Company Name</h1>
-            <button class="btn btn--primary">
+            <button class="btn btn--primary" data-bs-toggle="modal"
+                data-bs-target="#postInternshipModal">
                 <i class="bi bi-plus"></i> Post Internship
             </button>
         </div>
@@ -20,7 +21,8 @@
                     <div class="row align-items-center">
                         <div class="col-8">
                             <h5 class="card-title mb-1">Active Internships</h5>
-                            <div class="number fw-bold fs-4">5</div>
+                            <div
+                                class="number fw-bold fs-4">{{activeInternships()}}</div>
                         </div>
                         <div class="col-4 text-end">
                             <div class="card-icon fs-2"
@@ -41,7 +43,8 @@
                     <div class="row align-items-center">
                         <div class="col-8">
                             <h5 class="card-title mb-1">Total Applicants</h5>
-                            <div class="number fw-bold fs-4">5</div>
+                            <div
+                                class="number fw-bold fs-4">{{totalApplicants()}}</div>
                         </div>
                         <div class="col-4 text-end">
                             <div class="card-icon fs-2"
@@ -62,7 +65,8 @@
                     <div class="row align-items-center">
                         <div class="col-8">
                             <h5 class="card-title mb-1">Pending Reviews</h5>
-                            <div class="number fw-bold fs-4">5</div>
+                            <div
+                                class="number fw-bold fs-4">{{totalPending()}}</div>
                         </div>
                         <div class="col-4 text-end">
                             <div class="card-icon fs-2"
@@ -83,7 +87,8 @@
                     <div class="row align-items-center">
                         <div class="col-8">
                             <h5 class="card-title mb-1">Accepted</h5>
-                            <div class="number fw-bold fs-4">5</div>
+                            <div
+                                class="number fw-bold fs-4">{{totalAccepted()}}</div>
                         </div>
                         <div class="col-4 text-end">
                             <div class="card-icon fs-2"
@@ -327,8 +332,12 @@
                     </div>
 
                     <div class="stats">
-                        <span class="badge pending">0 pending</span>
-                        <span class="badge accepted">1 accepted</span>
+                        <span
+                            class="badge pending">{{countPending(application.id)}}
+                            Pending</span>
+                        <span
+                            class="badge accepted">{{countAccepted(application.id)}}
+                            Accepted</span>
                     </div>
 
                 </div>
@@ -340,8 +349,8 @@
                     ; track applicant) {
 
                     <div class="applicant-row " data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        (click)="studentInfo(applicant.id)">
+                        data-bs-target="#ApplicationModal"
+                        (click)="studentInfo(applicant.id,application)">
 
                         <div class="applicant-left">
 
@@ -358,7 +367,7 @@
                                     </span>
 
                                     <span class="match">
-                                        92% match
+                                        {{application.matchScore}} %
                                     </span>
 
                                 </div>
@@ -372,14 +381,18 @@
 
                         <div class="applicant-right">
 
-                            <span class="badge accepted">
-                                accepted
-                            </span>
+                            <div class="application-status"
+                                [class]="application?.status === 0 ? 'pending' : 
+             application?.status === 1 ? 'accepted' : 
+             application?.status === 2 ? 'rejected' : ''">
+                                {{ applicationStatus[application?.status ?? 0]
+                                }}
+                            </div>
 
                             <button
                                 class="view-btn"
                                 data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
+                                data-bs-target="#ApplicationModal">
                                 <i class="bi bi-eye"></i>
                             </button>
 
@@ -401,16 +414,231 @@
 
     </div>
     }
-    <div class="modal modal-dialog-centered" tabindex="-1" id="exampleModal">
-        <div class="modal-dialog">
+    <!-- Application detials modal -->
+    <div class="modal" tabindex="-1" id="ApplicationModal">
+        <div
+            class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content"
+                style="border-radius: 16px; border: none;">
+
+                <!-- Header -->
+                <div class="modal-header border-0 px-4 pt-4 pb-2">
+                    <h6 class="modal-title fw-semibold text-muted">Application
+                        Details</h6>
+                    <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body px-4 py-2">
+
+                    <!-- User Info -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div
+                            class="rounded-circle bg-light d-flex align-items-center justify-content-center flex-shrink-0"
+                            style="width:52px; height:52px;">
+                            <i class="bi bi-person fs-4 text-muted"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0">
+                                {{ applicationModalStudent?.first_name }}
+                                {{ applicationModalStudent?.last_name }}
+                            </h6>
+                            <small class="text-muted">{{
+                                applicationModalStudent?.major }}</small>
+                            <div class="d-flex align-items-center gap-2 mt-1">
+                                <span class="badge rounded-pill px-3 py-1"
+                                    style="background:#f0e6ff; color:#7c3aed; font-size:0.75rem;">
+                                    {{ applicationModalApplication?.matchScore
+                                    }}% Match
+                                </span>
+                                <span class="badge rounded-pill px-3 py-1"
+                                    style="font-size:0.75rem;"
+                                    [class]="applicationModalApplication?.status === 0 ? 'pending' :
+                                         applicationModalApplication?.status === 1 ? 'accepted' :
+                                         applicationModalApplication?.status === 2 ? 'rejected' : ''">
+                                    {{
+                                    applicationStatus[applicationModalApplication?.status
+                                    ?? 0] }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <p class="text-muted mb-2"
+                        style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em;">Contact</p>
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-envelope text-muted"
+                                style="font-size:0.85rem;"></i>
+                            <div>
+                                <small class="text-muted d-block"
+                                    style="font-size:0.7rem;">Email</small>
+                                <span style="font-size:0.85rem;">{{
+                                    applicationModalStudent?.email }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-telephone text-muted"
+                                style="font-size:0.85rem;"></i>
+                            <div>
+                                <small class="text-muted d-block"
+                                    style="font-size:0.7rem;">Phone</small>
+                                <span style="font-size:0.85rem;">{{
+                                    applicationModalStudent?.phone }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic -->
+                    <p class="text-muted mb-2"
+                        style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em;">Academic</p>
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-mortarboard text-muted"
+                                style="font-size:0.85rem;"></i>
+                            <div>
+                                <small class="text-muted d-block"
+                                    style="font-size:0.7rem;">University</small>
+                                <span style="font-size:0.85rem;">{{
+                                    applicationModalStudent?.university
+                                    }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-award text-muted"
+                                style="font-size:0.85rem;"></i>
+                            <div>
+                                <small class="text-muted d-block"
+                                    style="font-size:0.7rem;">GPA</small>
+                                <span style="font-size:0.85rem;">{{
+                                    applicationModalStudent?.gpa }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <p class="text-muted mb-2"
+                        style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em;">Skills</p>
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        @for(skill of applicationModalStudent?.studentSkills;
+                        track skill) {
+                        <span
+                            class="badge rounded-pill border text-muted fw-normal px-3 py-1"
+                            style="font-size:0.78rem; background:#f8f9fa;">
+                            {{ skills[skill.skill_id].skill_name }}
+                        </span>
+                        }
+                    </div>
+
+                    <!-- Links -->
+                    <p class="text-muted mb-2"
+                        style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em;">Links</p>
+                    <div class="d-flex gap-2 mb-2">
+                        <a [href]="applicationModalStudent?.linkedInUrl"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                            <i class="bi bi-linkedin"></i> LinkedIn
+                        </a>
+                        <a [href]="applicationModalStudent?.gitHubUrl"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer border-0 px-4 pb-4 pt-2 gap-2">
+                    <button type="button" class="btn btn-sm px-4"
+                        style="background:#d1f0e0; color:#1a7a4a; border:none; border-radius:8px;">
+                        <i class="bi bi-check-lg me-1"></i> Accept
+                    </button>
+                    <button type="button" class="btn btn-sm px-4"
+                        style="background:#fde0e0; color:#c0392b; border:none; border-radius:8px;">
+                        <i class="bi bi-x-lg me-1"></i> Reject
+                    </button>
+                    <button type="button" class="btn btn-sm px-4"
+                        data-bs-dismiss="modal"
+                        style="background:#f0f0f0; color:#555; border:none; border-radius:8px;">
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Internship detials modal -->
+    <!-- Internship posting modal -->
+    <div class="modal" tabindex="-1" id="postInternshipModal">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">New Internship</h5>
                     <button type="button" class="btn-close"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <form [formGroup]="internship_form">
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control"
+                                formControlName="title">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control"
+                                formControlName="description"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Submission
+                                Deadline</label>
+                            <input type="date" class="form-control"
+                                formControlName="submissionDeadline">
+                        </div>
+
+                       <div class="mb-3">
+    <label class="form-label">Duration</label>
+    <div class="input-group">
+        <input type="number" class="form-control" formControlName="durationValue" 
+               min="1" placeholder="e.g. 3">
+        <select class="form-select" formControlName="durationUnit" style="max-width: 130px;">
+            <option value="weeks">Weeks</option>
+            <option value="months">Months</option>
+        </select>
+    </div>
+</div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <select class="form-select"
+                                formControlName="location">
+                                <option [value]="0">On-site</option>
+                                <option [value]="1">Remote</option>
+                                <option [value]="2">Hybrid</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Is Paid?</label>
+                            <select class="form-select"
+                                formControlName="isPaid">
+                                <option [value]="0">No</option>
+                                <option [value]="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="internship_form.invalid">
+                            Submit
+                        </button>
+
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
