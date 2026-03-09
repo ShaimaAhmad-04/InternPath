@@ -1,3 +1,5 @@
+import { internship_location } from '../ENUMs/internship-location';
+
 export interface Internship {
   id: number;
   companyId: number;
@@ -6,7 +8,7 @@ export interface Internship {
   postDate: Date;
   submissionDeadline: Date;
   duration?: string;
-  location: number;
+  location: internship_location;
   active: boolean;
   isPaid: boolean;
 }

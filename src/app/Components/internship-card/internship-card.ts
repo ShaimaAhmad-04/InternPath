@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Internship } from '../../interfaces/iInternship';
 import { InternshipService } from '../internship-list/internship';
+import { internship_location } from '../../ENUMs/internship-location';
 
 @Component({
   selector: 'app-internship-card',
@@ -23,6 +24,19 @@ export class InternshipCardComponent {
     return this.internshipService.getCompanyName(this.internship.companyId);
   }
 
+  get locationLabel(): string {
+    return this.internshipService.getLocationLabel(this.internship.location);
+  }
+
+  get locationIcon(): string {
+    const icons: Record<number, string> = {
+      [internship_location.on_site]: '📋',
+      [internship_location.remote]: '🏠',
+      [internship_location.hyprid]: '🏢',
+    };
+    return icons[this.internship.location] ?? '📍';
+  }
+
   get skills(): string[] {
     return this.internshipService.getSkills(this.internship.id);
   }
@@ -33,13 +47,6 @@ export class InternshipCardComponent {
 
   get extraCount(): number {
     return Math.max(0, this.skills.length - 3);
-  }
-
-  get locationIcon(): string {
-    const icons: Record<string, string> = {
-      'Hybrid': '🏢', 'In-site': '📋', 'Remote': '🏠'
-    };
-    return icons[this.internship.location] ?? '📍';
   }
 
   goToDetail(): void {

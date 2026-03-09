@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { Internship } from '../../interfaces/iInternship';
+import { internship_location } from '../../ENUMs/internship-location';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class InternshipService {
       description: 'Join our team to work on cutting-edge web applications using React and Node.js. You will collaborate with experienced developers and gain hands-on experience in modern web development.',
       postDate: new Date('2026-01-15'),
       submissionDeadline: new Date('2026-03-15'),
-      duration: '3 months', location: 'Hybrid', isPaid: true, status: true
+      duration: '3 months',
+      location: internship_location.hyprid,
+      isPaid: true, active: true
     },
     {
       id: 2, companyId: 2,
@@ -22,7 +25,9 @@ export class InternshipService {
       description: 'Design user interfaces for mobile and web applications. Work with our design team to create beautiful and intuitive user experiences.',
       postDate: new Date('2026-01-20'),
       submissionDeadline: new Date('2026-03-20'),
-      duration: '2 months', location: 'In-site', isPaid: true, status: true
+      duration: '2 months',
+      location: internship_location.on_site,
+      isPaid: true, active: true
     },
     {
       id: 3, companyId: 1,
@@ -30,7 +35,9 @@ export class InternshipService {
       description: 'Learn about cloud infrastructure, CI/CD pipelines, and modern DevOps practices. Experience with AWS preferred.',
       postDate: new Date('2026-01-20'),
       submissionDeadline: new Date('2026-03-25'),
-      duration: '4 months', location: 'Remote', isPaid: true, status: true
+      duration: '4 months',
+      location: internship_location.remote,
+      isPaid: true, active: true
     },
     {
       id: 4, companyId: 3,
@@ -38,7 +45,9 @@ export class InternshipService {
       description: 'Work with large datasets and build machine learning models to drive meaningful business insights.',
       postDate: new Date('2026-01-20'),
       submissionDeadline: new Date('2026-04-01'),
-      duration: '3 months', location: 'Remote', isPaid: false, status: true
+      duration: '3 months',
+      location: internship_location.remote,
+      isPaid: false, active: true
     }
   ];
 
@@ -56,11 +65,11 @@ export class InternshipService {
   };
 
   private search$ = new BehaviorSubject<string>('');
-  private location$ = new BehaviorSubject<string>('All Locations');
+  private location$ = new BehaviorSubject<number>(-1);
   private type$ = new BehaviorSubject<string>('All Types');
 
   setSearch(val: string) { this.search$.next(val); }
-  setLocation(val: string) { this.location$.next(val); }
+  setLocation(val: number) { this.location$.next(val); }
   setType(val: string) { this.type$.next(val); }
 
   getCompanyName(companyId: number): string {
@@ -75,16 +84,25 @@ export class InternshipService {
     return this.internships.find(i => i.id === id);
   }
 
+  getLocationLabel(location: internship_location): string {
+    const labels: Record<number, string> = {
+      [internship_location.on_site]: 'On-Site',
+      [internship_location.remote]: 'Remote',
+      [internship_location.hyprid]: 'Hybrid',
+    };
+    return labels[location] ?? 'Unknown';
+  }
+
   getFiltered(): Observable<Internship[]> {
     return combineLatest([this.search$, this.location$, this.type$]).pipe(
       map(([search, location, type]) =>
         this.internships.filter(i => {
-          if (!i.status) return false;
+          if (!i.active) return false;
           const name = this.getCompanyName(i.companyId);
           const matchSearch = !search ||
             i.title.toLowerCase().includes(search.toLowerCase()) ||
             name.toLowerCase().includes(search.toLowerCase());
-          const matchLocation = location === 'All Locations' || i.location === location;
+          const matchLocation = location === -1 || i.location === location;
           const matchType = type === 'All Types' ||
             (type === 'Paid' && i.isPaid) ||
             (type === 'Unpaid' && !i.isPaid);

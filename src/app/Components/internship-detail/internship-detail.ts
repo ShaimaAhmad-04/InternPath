@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Internship } from '../../interfaces/iInternship';
 import { InternshipService } from '../internship-list/internship';
+import { internship_location } from '../../ENUMs/internship-location';
 
 type UserState = 'guest' | 'loggedIn' | 'matchCalculated';
 
@@ -45,12 +46,16 @@ export class InternshipDetailComponent implements OnInit {
   }
 
   get locationIcon(): string {
-    const icons: Record<string, string> = {
-      'Hybrid': '🏢', 'In-site': '📋', 'Remote': '🏠'
-    };
-    return icons[this.internship?.location ?? ''] ?? '📍';
-  }
-
+  const icons: Record<number, string> = {
+    [internship_location.on_site]: '📋',
+    [internship_location.remote]: '🏠',
+    [internship_location.hyprid]: '🏢',
+  };
+  return icons[this.internship?.location ?? -1] ?? '📍';
+}
+get locationLabel(): string {
+  return this.internshipService.getLocationLabel(this.internship?.location ?? 0);
+}
   goBack(): void {
     this.router.navigate(['/internships']);
   }

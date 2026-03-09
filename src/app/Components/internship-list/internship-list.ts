@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Internship } from '../../interfaces/iInternship';
 import { InternshipService } from './internship';
 import { InternshipCardComponent } from '../internship-card/internship-card';
+import { internship_location } from '../../ENUMs/internship-location';
 
 @Component({
   selector: 'app-internship-list',
@@ -16,12 +17,17 @@ import { InternshipCardComponent } from '../internship-card/internship-card';
 export class InternshipListComponent implements OnInit {
 
   internships$!: Observable<Internship[]>;
-
   searchQuery = '';
-  selectedLocation = 'All Locations';
+  selectedLocation = -1;
   selectedType = 'All Types';
 
-  locations = ['All Locations', 'Hybrid', 'In-site', 'Remote'];
+  locations = [
+    { label: 'All Locations', value: -1 },
+    { label: 'On-Site', value: internship_location.on_site },
+    { label: 'Remote', value: internship_location.remote },
+    { label: 'Hybrid', value: internship_location.hyprid },
+  ];
+
   types = ['All Types', 'Paid', 'Unpaid'];
 
   constructor(private internshipService: InternshipService) {}
@@ -30,15 +36,7 @@ export class InternshipListComponent implements OnInit {
     this.internships$ = this.internshipService.getFiltered();
   }
 
-  onSearch(): void {
-    this.internshipService.setSearch(this.searchQuery);
-  }
-
-  onLocationChange(): void {
-    this.internshipService.setLocation(this.selectedLocation);
-  }
-
-  onTypeChange(): void {
-    this.internshipService.setType(this.selectedType);
-  }
+  onSearch(): void { this.internshipService.setSearch(this.searchQuery); }
+  onLocationChange(): void { this.internshipService.setLocation(this.selectedLocation); }
+  onTypeChange(): void { this.internshipService.setType(this.selectedType); }
 }

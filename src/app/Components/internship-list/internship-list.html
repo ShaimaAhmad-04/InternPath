@@ -1,5 +1,4 @@
 <div class="page">
-
   <div class="hero">
     <h1>Explore Internship Opportunities</h1>
     <p>Find the perfect internship that matches your skills and goals</p>
@@ -22,7 +21,7 @@
     </div>
 
     <select [(ngModel)]="selectedLocation" (change)="onLocationChange()">
-      <option *ngFor="let loc of locations">{{ loc }}</option>
+      <option *ngFor="let loc of locations" [value]="loc.value">{{ loc.label }}</option>
     </select>
 
     <select [(ngModel)]="selectedType" (change)="onTypeChange()">
@@ -31,9 +30,7 @@
   </div>
 
   <ng-container *ngIf="internships$ | async as list">
-    <p class="count">
-      Showing <strong>{{ list.length }}</strong> internships
-    </p>
+    <p class="count">Showing <strong>{{ list.length }}</strong> internships</p>
     <div class="grid">
       <app-internship-card
         *ngFor="let internship of list"
@@ -41,5 +38,4 @@
       </app-internship-card>
     </div>
   </ng-container>
-
 </div>
