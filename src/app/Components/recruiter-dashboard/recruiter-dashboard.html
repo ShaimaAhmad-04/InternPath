@@ -135,7 +135,7 @@
         <div class="col-6">
             <div class="card p-1 mb-3">
                 <div class="header mt-1">
-                    <h5>Recent Applications</h5>
+                    <h5>Closing Soon</h5>
                     <p>Latest applications</p>
                 </div>
                 <div class="card-body">
@@ -265,9 +265,9 @@
     @if(breadcrumpSectionName == 'internship'){
     <!-- internship -->
     <div class="row mt-3">
-        <!-- First card -->
+        <!-- card -->
         @for(internship of internships; track internship) {
-        <div class="col-12">
+        <div class="col-12" (click)="editInternship(internship)">
             <div class="card p-4 mb-3 border-light-subtle shadow-sm">
 
                 <div class="d-flex align-items-center mb-2">
@@ -278,6 +278,9 @@
                 <p class="text-secondary mb-3">{{internship.description}}</p>
 
                 <div
+                    data-bs-toggle="modal"
+                    data-bs-target="#postInternshipModal"
+                    style="cursor: pointer;"
                     class="d-flex flex-wrap align-items-center gap-3 text-secondary mb-4">
                     <div><i class="bi bi-geo-alt me-1"></i>
                         {{internship.location}}</div>
@@ -296,10 +299,14 @@
                 <hr class="mt-0 mb-4 opacity-25">
 
                 <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary px-3">
+                    <button class="btn btn-outline-secondary px-3"
+                        (click)="editInternship(internship)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#postInternshipModal">
                         <i class="bi bi-pencil-square me-1"></i> Edit
                     </button>
-                    <button class="btn btn-outline-danger px-3">
+                    <button class="btn btn-outline-danger px-3"
+                        (click)="deleteInternship(internship.id)">
                         <i class="bi bi-trash3 me-1"></i> Delete
                     </button>
                 </div>
@@ -425,7 +432,7 @@
                 <div class="modal-header border-0 px-4 pt-4 pb-2">
                     <h6 class="modal-title fw-semibold text-muted">Application
                         Details</h6>
-                    <button type="button" class="btn-close"
+                    <button type="button " class="btn-close"
                         data-bs-dismiss="modal"></button>
                 </div>
 
@@ -572,89 +579,160 @@
     </div>
     <!-- Internship detials modal -->
     <!-- Internship posting modal -->
-    <div class="modal" tabindex="-1" id="postInternshipModal">
+    <div class="modal" tabindex="-1" id="postInternshipModal"
+        #postInternshipModal>
         <div
             class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title">Post New Internship</h5>
                     <button type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+                        data-bs-dismiss="modal" aria-label="Close"
+                        (click)="clearModal()"></button>
                 </div>
-                <div class="modal-body px-4 py-3">
-                    <form [formGroup]="internship_form" >
 
+                <div class="modal-body px-4 py-3">
+                    <p class="text-muted small mb-3">
+                        Fields marked with <span class="text-danger">*</span>
+                        are required.
+                    </p>
+
+                    <form [formGroup]="internship_form">
+
+                        <!-- Title -->
                         <div class="mb-4">
                             <label
-                                class="form-label fw-semibold small text-muted text-uppercase">Internship
-                                Title</label>
+                                class="form-label fw-semibold small text-muted text-uppercase">
+                                Internship Title <span
+                                    class="text-danger">*</span>
+                            </label>
                             <div class="input-group">
                                 <span
-                                    class="input-group-text bg-white border-end-0"><i
-                                        class="bi bi-briefcase text-primary"></i></span>
+                                    class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-briefcase text-primary"></i>
+                                </span>
                                 <input type="text"
                                     class="form-control border-start-0 ps-0"
                                     placeholder="e.g. Frontend Developer"
-                                    formControlName="title">
+                                    formControlName="title"
+                                    [class.required-input-warning]="internship_form.get('title')?.invalid && internship_form.get('title')?.touched">
                             </div>
                         </div>
 
+                        <!-- Description -->
                         <div class="mb-4">
                             <label
-                                class="form-label fw-semibold small text-muted text-uppercase">Role
-                                Description</label>
+                                class="form-label fw-semibold small text-muted text-uppercase">
+                                Role Description <span
+                                    class="text-danger">*</span>
+                            </label>
                             <textarea class="form-control" rows="4"
                                 placeholder="Describe the role, responsibilities, and what the intern will learn..."
-                                formControlName="description"></textarea>
+                                formControlName="description"
+                                [class.required-input-warning]="internship_form.get('description')?.invalid && internship_form.get('description')?.touched">
+                        </textarea>
                         </div>
 
+                        <!-- Deadline & Duration -->
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label
-                                    class="form-label fw-semibold small text-muted text-uppercase">Application
-                                    Deadline</label>
+                                    class="form-label fw-semibold small text-muted text-uppercase">
+                                    Application Deadline <span
+                                        class="text-danger">*</span>
+                                </label>
                                 <div class="input-group">
                                     <span
-                                        class="input-group-text bg-white border-end-0"><i
-                                            class="bi bi-calendar-event"></i></span>
+                                        class="input-group-text bg-white border-end-0">
+                                        <i class="bi bi-calendar-event"></i>
+                                    </span>
                                     <input type="date"
                                         class="form-control border-start-0 ps-0"
-                                        formControlName="submissionDeadline">
+                                        formControlName="submissionDeadline"
+                                        [class.required-input-warning]="internship_form.get('submissionDeadline')?.invalid && internship_form.get('submissionDeadline')?.touched">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label
-                                    class="form-label fw-semibold small text-muted text-uppercase">Duration</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control"
-                                        formControlName="durationValue"
-                                        placeholder="3">
-                                    <select class="form-select bg-light"
-                                        formControlName="durationUnit"
-                                        style="max-width: 110px;">
-                                        <option value="weeks">Weeks</option>
-                                        <option value="months">Months</option>
-                                    </select>
+                                    class="form-label fw-semibold small text-muted text-uppercase">
+                                    Duration <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control"
+                                    formControlName="duration"
+                                    placeholder="e.g. 3 months, 7 weeks..."
+                                    [class.required-input-warning]="internship_form.get('duration')?.invalid && internship_form.get('duration')?.touched">
+                            </div>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="mb-4">
+                            <label
+                                class="form-label fw-semibold small text-muted text-uppercase"
+                                for="skills-input">
+                                Required Skills <span
+                                    class="text-danger">*</span>
+                            </label>
+                            <div class="skills-field" id="skills-field"
+                                [class.required-input-warning]="pendingSkills.length === 0 && skillsTouched">
+                                <div class="skills-tags" id="skills-tags">
+                                    @for(skill of pendingSkills; track
+                                    skill.skillId) {
+                                    <span class="skill-tag">
+                                        {{ getSkillName(skill.skillId) }}
+                                        <button type="button"
+                                            (mousedown)="removeSkill(skill.skillId)">✕</button>
+                                    </span>
+                                    }
+                                </div>
+                                <div class="skills-input-row">
+                                    <input class="skills-input"
+                                        id="skills-input"
+                                        name="skills"
+                                        type="text"
+                                        placeholder="Search or add a skill…"
+                                        autocomplete="off"
+                                        [(ngModel)]="searchQuery"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (input)="searchSkill($event.target.value)"
+                                        (blur)="skillsTouched = true">
+
+                                </div>
+                                <div class="skills-dropdown"
+                                    id="skills-dropdown">
+                                    @if(searchSkills.length > 0 ||
+                                    searchQuery.trim()) {
+                                    <ul>
+                                        @for(skill of searchSkills; track
+                                        skill.skill_id) {
+                                        <li (mousedown)="selectSkill(skill)">
+                                            {{ skill.skill_name }}
+                                        </li>
+                                        }
+                                    </ul>
+                                    }
+                                    @if(searchSkills.length === 0 &&
+                                    searchQuery.trim()) {
+                                    <div class="add-custom"
+                                        (mousedown)="addCustomSkill(searchQuery)">
+                                        + Add "{{ searchQuery }}"
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-   <div class="mb-3">
-        <label class="form-label">Required Skills</label>
-        <div class="skills-field" id="skills-field">
-          <div class="skills-tags" id="skills-tags"></div>
-          <div class="skills-input-row">
-            <input class="skills-input" id="skills-input" type="text" placeholder="Search or add a skill…" autocomplete="off">
-          </div>
-          <div class="skills-dropdown" id="skills-dropdown"></div>
-        </div>
-      </div>
+
+                        <!-- Location & Compensation -->
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label
-                                    class="form-label fw-semibold small text-muted text-uppercase">Location
-                                    Type</label>
+                                    class="form-label fw-semibold small text-muted text-uppercase">
+                                    Location Type <span
+                                        class="text-danger">*</span>
+                                </label>
                                 <select class="form-select"
-                                    formControlName="location">
+                                    formControlName="location"
+                                    [class.required-input-warning]="internship_form.get('location')?.invalid && internship_form.get('location')?.touched">
                                     <option [value]="0">🏢 On-site</option>
                                     <option [value]="1">🏠 Remote</option>
                                     <option [value]="2">🌐 Hybrid</option>
@@ -662,17 +740,22 @@
                             </div>
                             <div class="col-md-6">
                                 <label
-                                    class="form-label fw-semibold small text-muted text-uppercase">Compensation</label>
+                                    class="form-label fw-semibold small text-muted text-uppercase">
+                                    Compensation <span
+                                        class="text-danger">*</span>
+                                </label>
                                 <div class="d-flex gap-2 mt-1">
                                     <input type="radio" class="btn-check"
-                                        name="isPaid" id="paidNo" [value]="0"
+                                        name="isPaid" id="paidNo"
+                                        [value]="0"
                                         formControlName="isPaid">
                                     <label
                                         class="btn btn-outline-secondary w-50"
                                         for="paidNo">Unpaid</label>
 
                                     <input type="radio" class="btn-check"
-                                        name="isPaid" id="paidYes" [value]="1"
+                                        name="isPaid" id="paidYes"
+                                        [value]="1"
                                         formControlName="isPaid">
                                     <label class="btn btn-outline-primary w-50"
                                         for="paidYes">Paid</label>
@@ -680,21 +763,24 @@
                             </div>
                         </div>
 
-                        <div class="d-grid mt-5">
-                            <button type="submit"
-                                class="btn btn-primary py-2 fw-bold"
-                                [disabled]="internship_form.invalid">
-                                Publish Internship
-                            </button>
-                        </div>
                     </form>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save
-                        changes</button>
+                        data-bs-dismiss="modal" #submitBtn
+                        (click)="clearModal()">
+                        Close
+                    </button>
+                    <button type="button"
+                        class="btn btn-primary py-2 fw-bold"
+                        [disabled]="internship_form.invalid"
+                        (click)="postInternship()">
+                        Publish Internship
+                    </button>
                 </div>
+
             </div>
         </div>
     </div>
+</div>

@@ -9,17 +9,22 @@ import { Student } from '../../interfaces/istudent';
 import { Status } from '../../ENUMs/applicationStatus';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { internship_location } from '../../ENUMs/internship-location';
+import { InternshipSkill } from '../../interfaces/internshipSkill';
+
 
 @Component({
   selector: 'recruiter-dashboard',
-  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, DatePipe],
+  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, DatePipe, FormsModule],
   templateUrl: './recruiter-dashboard.html',
   styleUrl: './recruiter-dashboard.css',
 })
 export class RecruiterDashboard {
   constructor() { }
 
-  @ViewChild('applcationModal') applcationModal!: ElementRef;
+  @ViewChild('postInternshipModal') postInternshipModal!: ElementRef;
+  @ViewChild('skills-input') skillsinput!: ElementRef;
+  @ViewChild('submitBtn') submitBtn!: ElementRef<HTMLButtonElement>;
+
 
   paginationConfig = { itemsPerPage: 7, currentPage: 1 };
   breadcrumpSectionName: string = "overview";
@@ -28,6 +33,12 @@ export class RecruiterDashboard {
   applicationModalApplication: Application | undefined
   applicationStatus = Status
   locationOptions = Object.entries(internship_location);
+  searchSkills: skill[] = [];
+  pendingSkills: InternshipSkill[] = [];
+  searchQuery: string = '';
+  skillsTouched: boolean = false;
+  isEditing: boolean = false;
+  editingId: number | null = null;
 
 
   internship_form = new FormGroup({
@@ -39,7 +50,8 @@ export class RecruiterDashboard {
     duration: new FormControl(),
     location: new FormControl(internship_location.on_site, Validators.required),
     active: new FormControl(0, Validators.required),
-    isPaid: new FormControl(0, Validators.required)
+    isPaid: new FormControl(0, Validators.required),
+
   })
 
   // skils
@@ -109,10 +121,15 @@ export class RecruiterDashboard {
       duration: "3 months",
       location: internship_location.hyprid,
       isPaid: true,
-      active: true
+      active: true,
+      skills: [
+        { skillId: 1, level: SkillExperience.Beginner },
+        { skillId: 2, level: SkillExperience.Intermediate },
+        { skillId: 3, level: SkillExperience.Beginner }
+      ]
     },
     {
-      id: 1,
+      id: 2,
       companyId: 1,
       title: "Frontend Intern",
       description: "Work on Angular projects",
@@ -121,65 +138,97 @@ export class RecruiterDashboard {
       duration: "3 months",
       location: internship_location.hyprid,
       isPaid: true,
-      active: true
-    }, {
-      id: 1,
-      companyId: 1,
-      title: "Frontend Intern",
-      description: "Work on Angular projects",
-      postDate: new Date("2026-01-01"),
-      submissionDeadline: new Date("2026-03-01"),
-      duration: "3 months",
-      location: internship_location.on_site,
-      isPaid: true,
-      active: true
-    }, {
-      id: 1,
-      companyId: 1,
-      title: "Frontend Intern",
-      description: "Work on Angular projects",
-      postDate: new Date("2026-01-01"),
-      submissionDeadline: new Date("2026-03-01"),
-      duration: "3 months",
-      location: internship_location.on_site,
-      isPaid: true,
-      active: true
-    }, {
-      id: 1,
-      companyId: 1,
-      title: "Frontend Intern",
-      description: "Work on Angular projects",
-      postDate: new Date("2026-01-01"),
-      submissionDeadline: new Date("2026-03-01"),
-      duration: "3 months",
-      location: internship_location.on_site,
-      isPaid: true,
-      active: true
-    }, {
-      id: 1,
-      companyId: 1,
-      title: "Frontend Intern",
-      description: "Work on Angular projects",
-      postDate: new Date("2026-01-01"),
-      submissionDeadline: new Date("2026-03-01"),
-      duration: "3 months",
-      location: internship_location.remote,
-      isPaid: true,
-      active: true
-    }, {
-      id: 1,
-      companyId: 1,
-      title: "Frontend Intern",
-      description: "Work on Angular projects",
-      postDate: new Date("2026-01-01"),
-      submissionDeadline: new Date("2026-03-01"),
-      duration: "3 months",
-      location: internship_location.remote,
-      isPaid: true,
-      active: true
+      active: true,
+      skills: [
+        { skillId: 1, level: SkillExperience.Intermediate },
+        { skillId: 4, level: SkillExperience.Beginner }
+      ]
     },
     {
-      id: 2,
+      id: 3,
+      companyId: 1,
+      title: "Frontend Intern",
+      description: "Work on Angular projects",
+      postDate: new Date("2026-01-01"),
+      submissionDeadline: new Date("2026-03-01"),
+      duration: "3 months",
+      location: internship_location.on_site,
+      isPaid: true,
+      active: true,
+      skills: [
+        { skillId: 2, level: SkillExperience.Beginner },
+        { skillId: 5, level: SkillExperience.Intermediate },
+        { skillId: 6, level: SkillExperience.Beginner }
+      ]
+    },
+    {
+      id: 4,
+      companyId: 1,
+      title: "Frontend Intern",
+      description: "Work on Angular projects",
+      postDate: new Date("2026-01-01"),
+      submissionDeadline: new Date("2026-03-01"),
+      duration: "3 months",
+      location: internship_location.on_site,
+      isPaid: true,
+      active: true,
+      skills: [
+        { skillId: 1, level: SkillExperience.Beginner },
+        { skillId: 3, level: SkillExperience.Expert }
+      ]
+    },
+    {
+      id: 5,
+      companyId: 1,
+      title: "Frontend Intern",
+      description: "Work on Angular projects",
+      postDate: new Date("2026-01-01"),
+      submissionDeadline: new Date("2026-03-01"),
+      duration: "3 months",
+      location: internship_location.on_site,
+      isPaid: true,
+      active: true,
+      skills: [
+        { skillId: 2, level: SkillExperience.Intermediate },
+        { skillId: 4, level: SkillExperience.Beginner },
+        { skillId: 7, level: SkillExperience.Beginner }
+      ]
+    },
+    {
+      id: 6,
+      companyId: 1,
+      title: "Frontend Intern",
+      description: "Work on Angular projects",
+      postDate: new Date("2026-01-01"),
+      submissionDeadline: new Date("2026-03-01"),
+      duration: "3 months",
+      location: internship_location.remote,
+      isPaid: true,
+      active: true,
+      skills: [
+        { skillId: 1, level: SkillExperience.Expert },
+        { skillId: 5, level: SkillExperience.Intermediate }
+      ]
+    },
+    {
+      id: 7,
+      companyId: 1,
+      title: "Frontend Intern",
+      description: "Work on Angular projects",
+      postDate: new Date("2026-01-01"),
+      submissionDeadline: new Date("2026-03-01"),
+      duration: "3 months",
+      location: internship_location.remote,
+      isPaid: true,
+      active: true,
+      skills: [
+        { skillId: 3, level: SkillExperience.Beginner },
+        { skillId: 6, level: SkillExperience.Intermediate },
+        { skillId: 8, level: SkillExperience.Beginner }
+      ]
+    },
+    {
+      id: 8,
       companyId: 2,
       title: "Backend Intern",
       description: "C# and SQL projects",
@@ -188,7 +237,12 @@ export class RecruiterDashboard {
       duration: "6 months",
       location: internship_location.remote,
       isPaid: false,
-      active: true
+      active: true,
+      skills: [
+        { skillId: 9, level: SkillExperience.Intermediate },
+        { skillId: 10, level: SkillExperience.Beginner },
+        { skillId: 7, level: SkillExperience.Expert }
+      ]
     }
   ];
 
@@ -238,7 +292,7 @@ export class RecruiterDashboard {
   }
 
   openModal() {
-    this.applcationModal.nativeElement.Show()
+    this.postInternshipModal.nativeElement.Show()
   }
   countPending(applicationId: number): number {
     return this.applications.filter(x => x.internshipId == applicationId && x.status == 0).length ?? 0;
@@ -259,4 +313,118 @@ export class RecruiterDashboard {
   activeInternships() {
     return this.internships.filter(x => x.active == true).length ?? 0
   }
+  searchSkill(query: string) {
+    this.searchQuery = query
+    this.searchSkills = this.skills.filter(x => x.skill_name.toLowerCase().includes(query.toLowerCase()))
+    return this.searchSkills;
+  }
+  selectSkill(skill: skill) {
+    //avoid duplicates
+    if (this.pendingSkills?.find(s => s.skillId === skill.skill_id)) return;
+
+    this.pendingSkills.push({
+      skillId: skill.skill_id,
+      level: SkillExperience.Beginner
+    });
+    this.searchSkills = [];       // close dropdown
+    this.searchQuery = '';        // clear query
+    this.skillsinput.nativeElement.value = '';
+  }
+  addCustomSkill(newSkill: string) {
+    if (!newSkill.trim()) return;
+
+    const new_skill: skill = {
+      skill_id: this.skills.length + 1,
+      skill_name: newSkill.trim()
+    };
+
+    this.skills.push(new_skill);
+    this.selectSkill(new_skill);
+
+    // extra safety clear
+    this.searchQuery = '';
+    this.searchSkills = [];
+    this.skillsinput.nativeElement.value = '';
+  }
+
+  removeSkill(id: number) {
+    this.pendingSkills = this.pendingSkills.filter(s => s.skillId !== id);
+  }
+
+  getSkillName(id: number): string {
+    return this.skills.find(s => s.skill_id === id)?.skill_name ?? 'Unknown';
+  }
+
+  clearModal() {
+    this.internship_form.reset();
+    this.skillsTouched = false;
+    this.pendingSkills = [];
+    this.searchQuery = '';
+    this.searchSkills = [];
+    this.isEditing = false;
+    this.editingId = null;
+    this.postInternshipModal.nativeElement.close;
+    this.submitBtn.nativeElement.click()
+  }
+  postInternship() {
+    if (this.internship_form.invalid) return;
+    if (this.pendingSkills.length === 0) {
+      this.skillsTouched = true;
+      return;
+    }
+
+    if (this.isEditing && this.editingId !== null) {
+      // UPDATE existing internship
+      const index = this.internships.findIndex(x => x.id === this.editingId);
+      if (index !== -1) {
+        this.internships[index] = {
+          ...this.internships[index],                          // keep original fields like postDate, id
+          title: this.internship_form.value.title!,
+          description: this.internship_form.value.description!,
+          submissionDeadline: new Date(this.internship_form.value.submissionDeadline!),
+          duration: this.internship_form.value.duration!,
+          location: this.internship_form.value.location!,
+          isPaid: this.internship_form.value.isPaid === 1,
+          skills: [...this.pendingSkills]
+        };
+      }
+    } else {
+      // CREATE new internship
+      const newInternship: Internship = {
+        id: this.internships.length + 1,
+        companyId: this.internship_form.value.companyId!,
+        title: this.internship_form.value.title!,
+        description: this.internship_form.value.description!,
+        postDate: new Date(),
+        submissionDeadline: new Date(this.internship_form.value.submissionDeadline!),
+        duration: this.internship_form.value.duration!,
+        location: this.internship_form.value.location!,
+        active: true,
+        isPaid: this.internship_form.value.isPaid === 1,
+        skills: [...this.pendingSkills]
+      };
+      this.internships.push(newInternship);
+    }
+
+    this.clearModal();
+  }
+
+  editInternship(internship: Internship) {
+    this.internship_form.patchValue({
+      title: internship.title,
+      description: internship.description,
+      submissionDeadline: internship.submissionDeadline.toISOString().split('T')[0],
+      duration: internship.duration,
+      location: internship.location,
+      isPaid: internship.isPaid ? 1 : 0,
+      companyId: internship.companyId,
+      postDate: internship.postDate
+    });
+
+    this.pendingSkills = [...internship.skills];
+  }
+  deleteInternship(internship_id: number) {
+    this.internships = this.internships.filter(x => x.id !== internship_id);
+  }
 }
+

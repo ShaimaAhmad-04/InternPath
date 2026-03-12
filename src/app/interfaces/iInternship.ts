@@ -1,4 +1,4 @@
-import {} from './'
+import { InternshipSkill } from './internshipSkill'
 export interface Internship {
   id: number;
   companyId: number;
@@ -10,6 +10,5 @@ export interface Internship {
   location: number;
   active: boolean;
   isPaid: boolean;
-  q : internshipskill[];
-  skills : InternshipSkill;
+  skills: InternshipSkill[];
 }

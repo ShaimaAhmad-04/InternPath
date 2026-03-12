@@ -276,4 +276,150 @@ a {
 }
 .skill-container:hover{
     background-color: #8080804a;
+}/* Field container */
+.skills-field {
+  border: 1.5px solid #d0ccc8;
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px 10px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-height: 48px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.skills-field:focus-within {
+  border-color: #6c8ef5;
+  box-shadow: 0 0 0 3px rgba(108, 142, 245, 0.12);
+}
+
+/* Tags */
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  border: 1.5px solid #d0ccc8;
+  color: #1a1a2e;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 8px;
+  animation: tagPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transition: border-color 0.15s;
+}
+
+.skill-tag:nth-child(4n+1) { border-color: #6c8ef5; color: #3a5bd9; background: #f0f3ff; }
+.skill-tag:nth-child(4n+2) { border-color: #f5a623; color: #c47f00; background: #fffbf0; }
+.skill-tag:nth-child(4n+3) { border-color: #2ecc71; color: #1a8a4a; background: #f0fff6; }
+.skill-tag:nth-child(4n+4) { border-color: #e74c8b; color: #b5175e; background: #fff0f6; }
+
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.skill-tag button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0;
+  opacity: 0.45;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+
+.skill-tag button:hover { opacity: 1; }
+
+/* Input */
+.skills-input-row {
+  flex: 1;
+  min-width: 140px;
+}
+
+.skills-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a2e;
+  padding: 4px 0;
+}
+
+.skills-input::placeholder { color: #b0aaa8; }
+
+/* Dropdown */
+.skills-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #d0ccc8;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+  z-index: 100;
+  overflow: hidden;
+  animation: dropDown 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes dropDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.skills-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.skills-dropdown li {
+  padding: 10px 14px;
+  font-size: 13.5px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: background 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skills-dropdown li:hover { background: #f5f3f0; }
+
+/* Add custom */
+.skills-dropdown li:last-child {
+  color: #6c8ef5;
+  font-weight: 600;
+  border-top: 1px solid #f0ece8;
+  margin-top: 2px;
+}
+
+.skills-dropdown li:last-child:hover { background: #f0f3ff; }
+.required-input-warning{
+    border-color: red;
 }
