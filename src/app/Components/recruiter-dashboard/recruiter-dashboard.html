@@ -573,71 +573,120 @@
     <!-- Internship detials modal -->
     <!-- Internship posting modal -->
     <div class="modal" tabindex="-1" id="postInternshipModal">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div
+            class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">New Internship</h5>
+                    <h5 class="modal-title">Post New Internship</h5>
                     <button type="button" class="btn-close"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form [formGroup]="internship_form">
+                <div class="modal-body px-4 py-3">
+                    <form [formGroup]="internship_form" >
 
-                        <div class="mb-3">
-                            <label class="form-label">Title</label>
-                            <input type="text" class="form-control"
-                                formControlName="title">
+                        <div class="mb-4">
+                            <label
+                                class="form-label fw-semibold small text-muted text-uppercase">Internship
+                                Title</label>
+                            <div class="input-group">
+                                <span
+                                    class="input-group-text bg-white border-end-0"><i
+                                        class="bi bi-briefcase text-primary"></i></span>
+                                <input type="text"
+                                    class="form-control border-start-0 ps-0"
+                                    placeholder="e.g. Frontend Developer"
+                                    formControlName="title">
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control"
+                        <div class="mb-4">
+                            <label
+                                class="form-label fw-semibold small text-muted text-uppercase">Role
+                                Description</label>
+                            <textarea class="form-control" rows="4"
+                                placeholder="Describe the role, responsibilities, and what the intern will learn..."
                                 formControlName="description"></textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Submission
-                                Deadline</label>
-                            <input type="date" class="form-control"
-                                formControlName="submissionDeadline">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label
+                                    class="form-label fw-semibold small text-muted text-uppercase">Application
+                                    Deadline</label>
+                                <div class="input-group">
+                                    <span
+                                        class="input-group-text bg-white border-end-0"><i
+                                            class="bi bi-calendar-event"></i></span>
+                                    <input type="date"
+                                        class="form-control border-start-0 ps-0"
+                                        formControlName="submissionDeadline">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label
+                                    class="form-label fw-semibold small text-muted text-uppercase">Duration</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control"
+                                        formControlName="durationValue"
+                                        placeholder="3">
+                                    <select class="form-select bg-light"
+                                        formControlName="durationUnit"
+                                        style="max-width: 110px;">
+                                        <option value="weeks">Weeks</option>
+                                        <option value="months">Months</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+   <div class="mb-3">
+        <label class="form-label">Required Skills</label>
+        <div class="skills-field" id="skills-field">
+          <div class="skills-tags" id="skills-tags"></div>
+          <div class="skills-input-row">
+            <input class="skills-input" id="skills-input" type="text" placeholder="Search or add a skill…" autocomplete="off">
+          </div>
+          <div class="skills-dropdown" id="skills-dropdown"></div>
+        </div>
+      </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label
+                                    class="form-label fw-semibold small text-muted text-uppercase">Location
+                                    Type</label>
+                                <select class="form-select"
+                                    formControlName="location">
+                                    <option [value]="0">🏢 On-site</option>
+                                    <option [value]="1">🏠 Remote</option>
+                                    <option [value]="2">🌐 Hybrid</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label
+                                    class="form-label fw-semibold small text-muted text-uppercase">Compensation</label>
+                                <div class="d-flex gap-2 mt-1">
+                                    <input type="radio" class="btn-check"
+                                        name="isPaid" id="paidNo" [value]="0"
+                                        formControlName="isPaid">
+                                    <label
+                                        class="btn btn-outline-secondary w-50"
+                                        for="paidNo">Unpaid</label>
+
+                                    <input type="radio" class="btn-check"
+                                        name="isPaid" id="paidYes" [value]="1"
+                                        formControlName="isPaid">
+                                    <label class="btn btn-outline-primary w-50"
+                                        for="paidYes">Paid</label>
+                                </div>
+                            </div>
                         </div>
 
-                       <div class="mb-3">
-    <label class="form-label">Duration</label>
-    <div class="input-group">
-        <input type="number" class="form-control" formControlName="durationValue" 
-               min="1" placeholder="e.g. 3">
-        <select class="form-select" formControlName="durationUnit" style="max-width: 130px;">
-            <option value="weeks">Weeks</option>
-            <option value="months">Months</option>
-        </select>
-    </div>
-</div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Location</label>
-                            <select class="form-select"
-                                formControlName="location">
-                                <option [value]="0">On-site</option>
-                                <option [value]="1">Remote</option>
-                                <option [value]="2">Hybrid</option>
-                            </select>
+                        <div class="d-grid mt-5">
+                            <button type="submit"
+                                class="btn btn-primary py-2 fw-bold"
+                                [disabled]="internship_form.invalid">
+                                Publish Internship
+                            </button>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Is Paid?</label>
-                            <select class="form-select"
-                                formControlName="isPaid">
-                                <option [value]="0">No</option>
-                                <option [value]="1">Yes</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary"
-                            [disabled]="internship_form.invalid">
-                            Submit
-                        </button>
-
                     </form>
                 </div>
                 <div class="modal-footer">
