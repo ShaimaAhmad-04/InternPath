@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { Reveal } from "../../Directives/reveal";
-
+import { Reveal } from '../../Directives/reveal';
 
 @Component({
   selector: 'app-homepage',
-  imports: [Reveal],
+  standalone: true,
+  imports: [Reveal, ],
   templateUrl: './homepage.html',
-  styleUrl: './homepage.css',
+  styleUrl: './homepage.css'
 })
-export class Homepage {
-
- 
-}
+export class Homepage {}
