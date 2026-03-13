@@ -1,6 +1,20 @@
 {
   "name": "intern-path",
   "version": "0.0.0",
+  "private": true,
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.5.",
+  "homepage": "https://github.com/ShaimaAhmad-04/InternPath#readme",
+  "bugs": {
+    "url": "https://github.com/ShaimaAhmad-04/InternPath/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShaimaAhmad-04/InternPath.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "signuplogin.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,17 +22,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "prettier": {
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
-  },
-  "private": true,
   "dependencies": {
     "@angular/common": "^20.1.0",
     "@angular/compiler": "^20.1.0",
@@ -27,6 +30,7 @@
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
     "bootstrap": "^5.3.8",
+    "express": "^5.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -43,5 +47,15 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.8.2"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
   }
 }
