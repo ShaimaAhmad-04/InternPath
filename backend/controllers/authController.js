@@ -18,7 +18,7 @@ export const register = async (req, res) => {
       }
     });
 
-    res.json(user);
+    res.json(user);   // are we sure we return the whole user object? some data like the hashed password are confidential
 
   }catch(error){
     res.status(500).json({error: error.message})
@@ -45,7 +45,7 @@ export const login = async (req,res)=>{
     }
 
     const token = jwt.sign(
-      { userId: user.id },
+      { userId: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
