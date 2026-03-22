@@ -5,24 +5,34 @@ import jwt from "jsonwebtoken"
 export const register = async (req, res) => {
   try{
     const { firstName, lastName, email, password, role, phoneNumber } = req.body;
-  const existingUser= await prisma.user.findUnique({where: {email}});
-  if(existingUser){
-    return res.status(400).json({message: "Email is already in use"});
-  }
+    const existingUser= await prisma.user.findUnique({where: {email}});
+    if(existingUser){
+      return res.status(400).json({message: "Email is already in use"});
+    }
     const hashedPassword = await bcrypt.hash(password,10);
 
     const user = await prisma.user.create({
-      data:{
+      data: {
         firstName,
         lastName,
         email,
         phoneNumber,
-        password:hashedPassword,
+        password: hashedPassword,
         role
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phoneNumber: true,
+        role: true
       }
-    });
+  });
 
-    res.json(user);   // are we sure we return the whole user object? some data like the hashed password are confidential
+    res.json(user); 
+
+    
 
   }catch(error){
     res.status(500).json({error: error.message})
@@ -58,5 +68,25 @@ export const login = async (req,res)=>{
 
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+}
+
+export const me = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },// from authenticate function
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phoneNumber: true,
+        role: true
+        //only selected fields are sent
+      }
+    })
+    res.json(user)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
   }
 }
