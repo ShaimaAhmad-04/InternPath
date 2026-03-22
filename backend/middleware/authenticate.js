@@ -14,8 +14,9 @@ const authenticate = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     //{ userId: 5, iat: 1697264442, exp: 1697268042 } example of a decoded token. iat->issued at
     req.userId = decoded.userId // attach userId to request
+    req.userRole = decoded.role
     
-    next()
+    next()//move to the function in route
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" })
   }
