@@ -37,17 +37,18 @@ export class InternshipCardComponent {
     return icons[this.internship.location] ?? '📍';
   }
 
-  get skills(): string[] {
-    return this.internshipService.getSkills(this.internship.id);
-  }
+ get skillNames(): string[] {
+  return this.internshipService.getSkillNames(this.internship);
+}
 
-  get visibleSkills(): string[] {
-    return this.skills.slice(0, 3);
-  }
+get visibleSkills(): string[] {
+  return this.skillNames.slice(0, 3);
+}
 
-  get extraCount(): number {
-    return Math.max(0, this.skills.length - 3);
-  }
+get extraCount(): number {
+  return Math.max(0, this.skillNames.length - 3);
+}
+ 
 
   goToDetail(): void {
     this.router.navigate(['/internships', this.internship.id]);

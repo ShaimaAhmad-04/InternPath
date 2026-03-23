@@ -41,7 +41,7 @@ export class InternshipDetailComponent implements OnInit {
     this.internship = this.internshipService.getById(id);
     if (this.internship) {
       this.companyName = this.internshipService.getCompanyName(this.internship.companyId);
-      this.skills = this.internshipService.getSkills(this.internship.id);
+     this.skills = this.internshipService.getSkillNames(this.internship);
     }
   }
 

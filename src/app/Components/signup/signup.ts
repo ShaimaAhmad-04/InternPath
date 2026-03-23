@@ -1,0 +1,55 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-signup',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './signup.html',
+  styleUrls: ['./signup.css']
+})
+export class SignupComponent {
+
+  selectedRole: 'student' | 'recruiter' = 'student';
+
+  firstName = '';
+  lastName = '';
+  email = '';
+  phone = '';
+  password = '';
+  confirmPassword = '';
+  errorMessage = '';
+
+  constructor(private router: Router) {}
+
+  selectRole(role: 'student' | 'recruiter'): void {
+    this.selectedRole = role;
+    this.errorMessage = '';
+  }
+
+  onCreateAccount(): void {
+    if (!this.firstName || !this.lastName || !this.email || !this.phone || !this.password || !this.confirmPassword) {
+      this.errorMessage = 'Please fill in all fields.';
+      return;
+    }
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Passwords do not match.';
+      return;
+    }
+    // Later: connect to backend register API
+    console.log('Register as:', this.selectedRole, {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      phone: this.phone,
+      password: this.password
+    });
+    alert('Account created! (connect to backend)');
+  }
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+}
