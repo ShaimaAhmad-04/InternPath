@@ -30,9 +30,11 @@ export const register = async (req, res) => {
       }
   });
 
-    res.json(user); 
-
-    
+    res.json(user);   // are we sure we return the whole user object? some data like the hashed password are confidential
+    // potential solution
+    // const {password:_ , ...safeUser}=user; // this right here basically discards the password or the hashed password
+    /*                                         out of user data to keep the password confidential for security purposes  */
+    // res.status(200).json({safeUser})  // we return all data but the hashed password
 
   }catch(error){
     res.status(500).json({error: error.message})
