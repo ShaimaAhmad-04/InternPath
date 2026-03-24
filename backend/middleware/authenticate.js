@@ -15,7 +15,7 @@ const authenticate = (req, res, next) => {
     //{ userId: 5, iat: 1697264442, exp: 1697268042 } example of a decoded token. iat->issued at
     req.userId = decoded.userId // attach userId to request
     req.userRole = decoded.role
-    
+
     next()//move to the function in route
   } catch (error) {
     return res.status(401).json({ message: "Invalid token" })

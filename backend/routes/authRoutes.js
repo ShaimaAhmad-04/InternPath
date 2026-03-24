@@ -2,7 +2,8 @@ import express from "express"
 import { register, login, me } from '../controllers/authController.js'
 import authenticate from '../middleware/authenticate.js'
 
-const router = express.Router()
+const router = express.Router()  // creates a Express router object, it's a container for grouping
+// related routes together
 router.post("/register", register)
 router.post("/login", login)
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { Internship } from '../../interfaces/iInternship';
 import { internship_location } from '../../ENUMs/internship-location';
+import { SkillExperience } from '../../ENUMs/skillLevel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,13 @@ export class InternshipService {
       submissionDeadline: new Date('2026-03-15'),
       duration: '3 months',
       location: internship_location.hyprid,
-      isPaid: true, active: true
+      isPaid: true, active: true,
+      skills: [
+        { skillId: 1, level: SkillExperience.Intermediate },
+        { skillId: 2, level: SkillExperience.Intermediate },
+        { skillId: 3, level: SkillExperience.Beginner },
+        { skillId: 4, level: SkillExperience.Beginner },
+      ]
     },
     {
       id: 2, companyId: 2,
@@ -27,7 +34,11 @@ export class InternshipService {
       submissionDeadline: new Date('2026-03-20'),
       duration: '2 months',
       location: internship_location.on_site,
-      isPaid: true, active: true
+      isPaid: true, active: true,
+      skills: [
+        { skillId: 5, level: SkillExperience.Intermediate },
+        { skillId: 1, level: SkillExperience.Beginner },
+      ]
     },
     {
       id: 3, companyId: 1,
@@ -37,7 +48,12 @@ export class InternshipService {
       submissionDeadline: new Date('2026-03-25'),
       duration: '4 months',
       location: internship_location.remote,
-      isPaid: true, active: true
+      isPaid: true, active: true,
+      skills: [
+        { skillId: 6, level: SkillExperience.Intermediate },
+        { skillId: 7, level: SkillExperience.Beginner },
+        { skillId: 8, level: SkillExperience.Beginner },
+      ]
     },
     {
       id: 4, companyId: 3,
@@ -47,7 +63,12 @@ export class InternshipService {
       submissionDeadline: new Date('2026-04-01'),
       duration: '3 months',
       location: internship_location.remote,
-      isPaid: false, active: true
+      isPaid: false, active: true,
+      skills: [
+        { skillId: 9, level: SkillExperience.Intermediate },
+        { skillId: 10, level: SkillExperience.Beginner },
+        { skillId: 11, level: SkillExperience.Beginner },
+      ]
     }
   ];
 
@@ -57,11 +78,18 @@ export class InternshipService {
     3: 'StartUp Hub'
   };
 
-  private internshipSkills: Record<number, string[]> = {
-    1: ['React', 'Node.js', 'JavaScript', 'SQL'],
-    2: ['UI/UX Design', 'React'],
-    3: ['AWS', 'Docker', 'Git'],
-    4: ['Python', 'ML', 'SQL']
+  private skillNames: Record<number, string> = {
+    1: 'React',
+    2: 'Node.js',
+    3: 'JavaScript',
+    4: 'SQL',
+    5: 'UI/UX Design',
+    6: 'AWS',
+    7: 'Docker',
+    8: 'Git',
+    9: 'Python',
+    10: 'ML',
+    11: 'SQL'
   };
 
   private search$ = new BehaviorSubject<string>('');
@@ -76,8 +104,12 @@ export class InternshipService {
     return this.companyNames[companyId] ?? 'Unknown Company';
   }
 
-  getSkills(internshipId: number): string[] {
-    return this.internshipSkills[internshipId] ?? [];
+  getSkillName(skillId: number): string {
+    return this.skillNames[skillId] ?? 'Unknown Skill';
+  }
+
+  getSkillNames(internship: Internship): string[] {
+    return internship.skills.map(s => this.getSkillName(s.skillId));
   }
 
   getById(id: number): Internship | undefined {
