@@ -1,0 +1,24 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+/* Brand / Logo */
+.navbar__brand {
+    width: 250px;
+    height: 65px;
+}
+
+.navbar__brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right side buttons container */
+.navbar__actions {
+    display: flex;
+    gap: 8px;
+}
