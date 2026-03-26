@@ -11,7 +11,7 @@ for page in doc:
 # 2. Setup the Groq Client
 client = OpenAI(
     base_url="https://api.groq.com/openai/v1",
-    api_key="g**********************QUvA" # Ensure this is your actual key
+    api_key= "YOUR_REAL_KEY" # Ensure this is your actual key
 )
 
 def extract_resume_data(resume_text):
