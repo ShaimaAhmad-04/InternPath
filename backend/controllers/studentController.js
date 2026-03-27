@@ -5,7 +5,7 @@ import prisma from '../prisma/client.js'
 export const getStudentProfile = async (req, res) => {
   try {
     const student = await prisma.student.findUnique({
-      where: { userId: req.userId },
+      where: { userId: req.userId },// from authenticate.js
       include: {
         user: {
           select: {
