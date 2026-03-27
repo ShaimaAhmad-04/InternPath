@@ -1,24 +1,28 @@
-import 'dotenv/config';
-import express from 'express'
-import cors from 'cors'
-import authRoutes from './routes/authRoutes.js'
+import 'dotenv/config'; // Load environment variables from .env into process.env.
+import express from 'express'; // Import Express framework.
+import cors from 'cors'; // Import CORS middleware.
+import authRoutes from './routes/authRoutes.js'; // Import auth routes module.
+import listingRoutes from './routes/listingRoutes.js'
+import studentRoutes from './routes/studentRoutes.js'
 
+const app = express(); // Create an Express app instance.
+const PORT = 5002; // Define server port.
 
-const app = express()
-const PORT = 5002
+app.use(cors()); // Enable CORS for incoming requests.
+app.use(express.json()); // Parse JSON request bodies.
 
-app.use(cors())
-app.use(express.json())
+app.get('/', (req, res) => { // Define GET route for root path.
+  res.send('Backend is Working'); // Send a plain-text health message.
+});
 
-app.get('/',(req,res)=>{
-  res.send('Backend is Working')
-})
+app.get('/api/test', (req, res) => { // Define test endpoint.
+  res.json({ message: 'API works' }); // Send JSON test response.
+});
 
-app.get('/api/test',(req,res)=>{
-  res.json({message:"API works"})
-})
+app.use('/auth', authRoutes); // Mount auth routes under /auth prefix.
+app.use('/listings',listingRoutes);
+app.use('/student', studentRoutes);
 
-app.use("/auth",authRoutes)
-app.listen(PORT,() => {
-  console.log(`Server running on http://localhost:${PORT}`);
-})
+app.listen(PORT, () => { // Start server and listen on PORT.
+  console.log(`Server running on http://localhost:${PORT}`); // Log server URL when started.
+});

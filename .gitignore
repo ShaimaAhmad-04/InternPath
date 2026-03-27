@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 
 node_modules/
+backend/controllers/exampleting.js
+backend/middleware/Middlewareexample.js
