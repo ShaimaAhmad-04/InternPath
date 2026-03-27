@@ -63,10 +63,32 @@
 
 /* TYPOGRAPHY */
 .title-heading {
-    margin-top: 2%;
-    font-size: 68px;
+    margin-top: 1rem;
+    font-size: 42px;
     font-weight: 700;
     text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.homepage-Body,
+.container-fluid {
+    position: relative;
+    z-index: 1;
+}
+
+.icon-container,
+.hero-icon,
+.icon-container i {
+    font-size: 30px !important;
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    z-index: 1;
+}
+
+.navbar {
+    z-index: 9999 !important;
 }
 
 .subtitle {
@@ -229,4 +251,50 @@
 .fade-in.active{
     opacity: 1;
 
+}
+.homepage-main-wrapper {
+    padding-top: 40px; /* Space for the navbar */
+    overflow-x: hidden;
+}
+
+.introduction-section {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.hero-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Ensure the hero suitcase icon stays a reasonable size */
+.icon-container {
+    width: 80px !important;
+    height: 80px !important;
+    background-color: #f3e8ff;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-icon {
+    font-size: 40px !important;
+    color: #7c3aed;
+}
+
+.title-heading {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+/* Force the success card to not grow too huge */
+.success-card {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
