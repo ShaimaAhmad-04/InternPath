@@ -10,10 +10,9 @@ import { Router } from '@angular/router';
   templateUrl: './signup.html',
   styleUrls: ['./signup.css']
 })
-export class SignupComponent {
+export class Signup {
 
   selectedRole: 'student' | 'recruiter' = 'student';
-
   firstName = '';
   lastName = '';
   email = '';
@@ -38,15 +37,13 @@ export class SignupComponent {
       this.errorMessage = 'Passwords do not match.';
       return;
     }
-    // Later: connect to backend register API
-    console.log('Register as:', this.selectedRole, {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      phone: this.phone,
-      password: this.password
-    });
-    alert('Account created! (connect to backend)');
+    // CONNECT TO BACKEND: SEND REGISTRATION DATA TO API
+    // CONNECT TO BACKEND: IF STUDENT NAVIGATE TO PROFILE-SETUP, IF RECRUITER NAVIGATE TO RECRUITER-DASHBOARD
+    if (this.selectedRole === 'student') {
+      this.router.navigate(['/profile-setup']);
+    } else {
+      this.router.navigate(['/recruiter-dashboard']);
+    }
   }
 
   goToLogin(): void {

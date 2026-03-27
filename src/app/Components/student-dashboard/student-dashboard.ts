@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class StudentDashboard {
 
+  // CONNECT TO BACKEND: REPLACE WITH REAL LOGGED-IN STUDENT DATA FROM API
   student = {
     firstName: 'Sama',
     lastName: 'Al-Otaiby',
@@ -23,6 +24,7 @@ export class StudentDashboard {
     profileCompletion: 85
   };
 
+  // CONNECT TO BACKEND: REPLACE WITH REAL APPLICATIONS FROM API
   applications = [
     {
       id: 1,
@@ -56,5 +58,6 @@ export class StudentDashboard {
   goToSettings(): void { this.router.navigate(['/student-settings']); }
   goToProfileSetup(): void { this.router.navigate(['/profile-setup']); }
 
+  // CONNECT TO BACKEND: LOGOUT SHOULD CLEAR AUTH TOKEN AND SESSION
   logout(): void { this.router.navigate(['/homepage']); }
 }

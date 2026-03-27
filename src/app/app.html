@@ -2,24 +2,40 @@
 
   <div class="navbar__brand fade-up" appReveal>
     <a routerLink="/homepage">
-      <img src="assets/images/Logo2.png" class="navbar__logo-icon">
+      <img src="assets/images/Logo2.png" class="navbar__brand-logo">
     </a>
   </div>
 
   <div class="navbar__actions">
 
-    <button type="button" class="btn btn--secondary" routerLink="/login">
-      Login
-    </button>
+    <!-- SHOWN WHEN NOT LOGGED IN -->
+    <ng-container *ngIf="!isLoggedIn">
+      <button type="button" class="btn btn--secondary" routerLink="/login">
+        Login
+      </button>
+      <button type="button" class="btn btn--primary" routerLink="/signup">
+        Get Started
+      </button>
+    </ng-container>
 
-    <button type="button" class="btn btn--primary" routerLink="/signup">
-      Get Started
-    </button>
+    <!-- SHOWN WHEN LOGGED IN -->
+    <ng-container *ngIf="isLoggedIn">
+      <a class="navbar__browse" routerLink="/internships">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+        Browse Internships
+      </a>
+      <button class="navbar__avatar-btn" routerLink="/student-settings">
+        <div class="navbar__avatar">{{ userInitial }}</div>
+        <span class="navbar__username">{{ userName }}</span>
+      </button>
+    </ng-container>
 
   </div>
 
 </nav>
 
-<div class="main-content">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

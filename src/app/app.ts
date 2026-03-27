@@ -13,11 +13,15 @@ import { CommonModule } from '@angular/common';
 export class App {
   protected readonly title = signal('InternPath');
 
+  // CONNECT TO BACKEND: REPLACE WITH REAL AUTH CHECK FROM AUTH SERVICE
+  // These should come from your auth service once backend is ready
   isLoggedIn = false;
   userName = 'Sama';
   userInitial = 'S';
 
   constructor(private router: Router) {
+    // CONNECT TO BACKEND: LISTEN TO AUTH STATE CHANGES
+    // For now simulate login state based on current route
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const loggedInRoutes = [

@@ -23,27 +23,27 @@ export class LoginComponent {
       this.errorMessage = 'Please enter your email and password.';
       return;
     }
-    // Later: connect to backend auth API
+    // CONNECT TO BACKEND: VERIFY CREDENTIALS VIA AUTH API
+    // CONNECT TO BACKEND: IF NEW USER NAVIGATE TO PROFILE-SETUP, IF EXISTING NAVIGATE TO STUDENT-DASHBOARD
     this.errorMessage = 'Invalid credentials. (connect to backend)';
   }
 
   loginAsStudent(): void {
-    // Later: auto-login with student demo account
-    this.router.navigate(['/internships']);
+    // CONNECT TO BACKEND: AUTO-LOGIN WITH STUDENT DEMO ACCOUNT TOKEN
+    this.router.navigate(['/profile-setup']);
   }
 
   loginAsRecruiter(): void {
-    // Later: auto-login with recruiter demo account
+    // CONNECT TO BACKEND: AUTO-LOGIN WITH RECRUITER DEMO ACCOUNT TOKEN
     this.router.navigate(['/recruiter-dashboard']);
   }
 
   loginAsAdmin(): void {
-    // Later: auto-login with admin demo account
+    // CONNECT TO BACKEND: AUTO-LOGIN WITH ADMIN DEMO ACCOUNT TOKEN
     this.router.navigate(['/admin-dashboard']);
   }
 
   goToSignup(): void {
-
-  this.router.navigate(['/signup']);
+    this.router.navigate(['/signup']);
   }
 }

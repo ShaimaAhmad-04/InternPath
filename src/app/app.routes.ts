@@ -4,7 +4,10 @@ import { RecruiterDashboard } from './Components/recruiter-dashboard/recruiter-d
 import { InternshipListComponent } from './Components/internship-list/internship-list';
 import { InternshipDetailComponent } from './Components/internship-detail/internship-detail';
 import { LoginComponent } from './Components/login/login';
-import {SignupComponent} from './Components/signup/signup';
+import { Signup} from './Components/signup/signup';
+import { StudentDashboard } from './Components/student-dashboard/student-dashboard';
+import { StudentSettings } from './Components/student-settings/student-settings';
+import { ProfileSetup } from './Components/profile-setup/profile-setup';
 
 export const routes: Routes = [
   { path: 'homepage', component: Homepage },
@@ -13,5 +16,8 @@ export const routes: Routes = [
   { path: 'internships', component: InternshipListComponent },
   { path: 'internships/:id', component: InternshipDetailComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component:SignupComponent},
+  { path: 'signup', component: Signup},
+  { path: 'student-dashboard', component: StudentDashboard },
+  { path: 'student-settings', component: StudentSettings },
+  { path: 'profile-setup', component: ProfileSetup },
 ];
