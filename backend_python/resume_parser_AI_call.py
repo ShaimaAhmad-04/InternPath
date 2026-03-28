@@ -1,12 +1,17 @@
 import os
 import sys
+
+import load_dotenv
 import requests
 from fastapi import FastAPI, HTTPException
+from dotenv import load_dotenv
+
+load_dotenv()  # load .env first
 
 # This line ensures this file can "see" main.py in the folder above it
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from main import extract_text_from_pdf, parse_resume
+from main import extract_text, parse_resume
 
 app = FastAPI()
 
@@ -23,7 +28,7 @@ from docx2python import docx2python
 
 load_dotenv()
 app = FastAPI()
-client = OpenAI(api_key=Config.API_KEY, base_url= Config.MODEL_NAME)
+client = OpenAI(api_key=Config.API_KEY, base_url= Config.MODEL_URL)
 
 
 @app.post("/upload-cv")
@@ -32,20 +37,8 @@ async def create_profile_from_cv(file: UploadFile = File(...)):
   file_bytes = await file.read()  # Read once to use for both types
 
   try:
-    # 1. Handle DOCX
-    if file.content_type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-      print("Processing DOCX file...")
-      temp_path = "temp_resume.docx"
-      with open(temp_path, "wb") as buffer:
-        buffer.write(file_bytes)
 
-      with docx2python(temp_path) as docx_content:
-        text = docx_content.text
-
-      os.remove(temp_path)
-
-      # 2. Handle PDF
-    elif file.content_type == "application/pdf":
+    if file.content_type == "application/pdf":
       print("Processing PDF file...")
       doc = fitz.open(stream=file_bytes, filetype="pdf")
       text = "".join([page.get_text() for page in doc])

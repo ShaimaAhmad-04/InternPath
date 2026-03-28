@@ -1,13 +1,15 @@
+from dotenv import load_dotenv
 import os
 import json
 import fitz  # For PDFs
 from docx2python import docx2python  # For DOCX
-from openai import OpenAI
-from config import Config
 import prompts
+from config import Config
+from openai import OpenAI
+from dotenv import load_dotenv
 
-# Initialize Client
-client = OpenAI(api_key=Config.API_KEY, base_url="https://api.groq.com/openai/v1")
+load_dotenv()  # ensure env vars are loaded first
+client = OpenAI(api_key=Config.API_KEY, base_url=Config.BASE_URL)
 
 
 def extract_text(file_path):
