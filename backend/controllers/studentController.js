@@ -64,3 +64,22 @@ export const updateStudentProfile = async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 }
+
+export const getStudentCV = async (req, res) => {
+  try {
+    const student = await prisma.student.findUnique({
+      where: { userId: req.userId },
+      select: {
+        cvUrl: true
+      }
+    })
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" })
+    }
+
+    res.json(student)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}

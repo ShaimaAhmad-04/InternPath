@@ -1,6 +1,6 @@
 import { internship_location } from '../ENUMs/internship-location';
-
 import { InternshipSkill } from './internshipSkill'
+
 export interface Internship {
   id: number;
   companyId: number;
