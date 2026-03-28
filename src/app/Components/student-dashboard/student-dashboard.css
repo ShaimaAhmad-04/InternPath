@@ -697,3 +697,12 @@
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
+:host {
+  display: block;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px 80px;
+}
