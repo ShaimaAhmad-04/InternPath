@@ -1,7 +1,7 @@
 .setup-page {
   min-height: 100vh;
   background: linear-gradient(160deg, #f5f3ff 0%, #faf5ff 40%, #fce7f3 100%);
-  padding: 48px 24px 80px;
+  padding: 16px 24px 80px;
 }
 
 .setup-header {

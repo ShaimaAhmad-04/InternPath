@@ -30,7 +30,7 @@
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #a120ea, #fe007a);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,8 +51,8 @@
 }
 
 .badge.paid {
-  background: #dcfce7;
-  color: #16a34a;
+  background: #f3e8ff;
+  color: #7c3aed;
 }
 
 .badge.unpaid {
@@ -99,8 +99,8 @@
 }
 
 .skill-tag {
-  background: #f3f4f6;
-  color: #374151;
+  background: #ede9fe;
+  color: #6d28d9;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 12px;
@@ -116,7 +116,7 @@
   margin-top: auto;
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  background: linear-gradient(135deg, #a120ea, #fe007a);
   color: white;
   font-size: 15px;
   font-weight: 600;

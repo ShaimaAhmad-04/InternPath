@@ -8,9 +8,11 @@ body {
     color: #333;
 }
 
-.container-fluid {
+.dashboard-wrapper {
     background-color: #fcfcfc;
+    padding: 24px 28px;
 }
+
 
 
 /* =========================
@@ -18,7 +20,8 @@ body {
 ========================= */
 
 .header {
-    padding: 1%;
+   padding: 20px 0;
+    margin: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,6 +37,15 @@ body {
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
     font-weight: 500;
+    background-color: #7b2cbf;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn--primary:hover {
+    background-color: #6a24a8;
+    color: #fff;
 }
 
 
@@ -52,8 +64,15 @@ body {
 .background-card {
     background-color: #dac9e461;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
 
+.overview-clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
 
+.overview-clickable:hover {
+    background-color: #c8b0d866;
 }
 
 .card:hover {
