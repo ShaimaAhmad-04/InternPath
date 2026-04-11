@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Reveal } from '../../Directives/reveal';
 import { RouterModule } from '@angular/router';
+import { Reveal } from '../../Directives/reveal';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [Reveal, RouterModule],
+  imports: [RouterModule, Reveal],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css'
 })

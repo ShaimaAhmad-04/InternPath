@@ -253,7 +253,7 @@
 
 }
 .homepage-main-wrapper {
-    padding-top: 40px; /* Space for the navbar */
+    padding-top: 0;
     overflow-x: hidden;
 }
 
@@ -297,4 +297,74 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+/* Hero briefcase icon */
+.hero-icon-wrapper {
+    width: 88px;
+    height: 88px;
+    background: #ede9fe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-briefcase-icon {
+    font-size: 2.4rem;
+    color: #7c3aed;
+}
+
+/* Stats row */
+.stats-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 32px;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #a120ea, #fe007a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.82rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 36px;
+    background-color: #e0e0e0;
+}
+
+/* Feature cards */
+.feature-card {
+    border-radius: 14px !important;
+    text-align: left;
+}
+
+.feature-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
 }

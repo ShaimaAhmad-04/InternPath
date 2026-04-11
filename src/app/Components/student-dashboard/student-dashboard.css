@@ -1,7 +1,7 @@
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 16px 24px 80px;
 }
 
 .dashboard__header {
@@ -286,7 +286,7 @@
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 16px 24px 80px;
 }
 
 .dashboard__header {
@@ -696,4 +696,13 @@
 
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+:host {
+  display: block;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px 80px;
 }

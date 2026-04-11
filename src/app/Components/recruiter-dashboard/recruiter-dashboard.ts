@@ -11,20 +11,27 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { internship_location } from '../../ENUMs/internship-location';
 import { InternshipSkill } from '../../interfaces/internshipSkill';
 
-
 @Component({
   selector: 'recruiter-dashboard',
   imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, DatePipe, FormsModule],
   templateUrl: './recruiter-dashboard.html',
-  styleUrl: './recruiter-dashboard.css',
+  styleUrls: ['./recruiter-dashboard.css'], // FIXED
 })
+
 export class RecruiterDashboard {
+
+  // TODO (Backend): Inject services here
+  // constructor(
+  //   private internshipService: InternshipService,
+  //   private applicationService: ApplicationService,
+  //   private companyService: CompanyService
+  // ) {}
   constructor() { }
 
   @ViewChild('postInternshipModal') postInternshipModal!: ElementRef;
   @ViewChild('skills-input') skillsinput!: ElementRef;
-  @ViewChild('submitBtn') submitBtn!: ElementRef<HTMLButtonElement>;
 
+companyName: string = 'InternPath';
 
   paginationConfig = { itemsPerPage: 7, currentPage: 1 };
   breadcrumpSectionName: string = "overview";
@@ -43,15 +50,15 @@ export class RecruiterDashboard {
 
   internship_form = new FormGroup({
     title: new FormControl('', Validators.required),
+    companyName: new FormControl('', Validators.required),
     companyId: new FormControl(10000, Validators.required),
     description: new FormControl('', Validators.required),
     postDate: new FormControl(new Date(), Validators.required),
     submissionDeadline: new FormControl('', Validators.required),
-    duration: new FormControl(),
+    duration: new FormControl('', Validators.required),
     location: new FormControl(internship_location.on_site, Validators.required),
     active: new FormControl(0, Validators.required),
     isPaid: new FormControl(0, Validators.required),
-
   })
 
   // skils
@@ -105,6 +112,95 @@ export class RecruiterDashboard {
       studentSkills: [
         { skill_id: 1, studentId: 2, experience: SkillExperience.Intermediate },
         { skill_id: 4, studentId: 2, experience: SkillExperience.Expert }
+      ]
+    },
+    {
+      id: 3,
+      first_name: "Omar",
+      last_name: "Hassan",
+      email: "omar.hassan@example.com",
+      password: "",
+      role: "student",
+      major: "Computer Engineering",
+      university: "Jordan University of Science and Technology",
+      experience: "Part-time developer at StartupJO",
+      gpa: 85,
+      graduationYear: 2026,
+      linkedInUrl: "https://linkedin.com/in/omarhassan",
+      gitHubUrl: "https://github.com/omarhassan",
+      certifications: ["Flutter Fundamentals"],
+      cvUrl: "https://example.com/cv/omar.pdf",
+      phone: "0791234567",
+      studentSkills: [
+        { skill_id: 2, studentId: 3, experience: SkillExperience.Expert },
+        { skill_id: 4, studentId: 3, experience: SkillExperience.Intermediate }
+      ]
+    },
+    {
+      id: 4,
+      first_name: "Lina",
+      last_name: "Nasser",
+      email: "lina.nasser@example.com",
+      password: "",
+      role: "student",
+      major: "Information Technology",
+      university: "German Jordanian University",
+      experience: null,
+      gpa: 90,
+      graduationYear: 2025,
+      linkedInUrl: "https://linkedin.com/in/linanasser",
+      gitHubUrl: "https://github.com/linanasser",
+      certifications: ["Angular Basics", "C# Programming"],
+      cvUrl: "https://example.com/cv/lina.pdf",
+      phone: "0796543210",
+      studentSkills: [
+        { skill_id: 1, studentId: 4, experience: SkillExperience.Expert },
+        { skill_id: 3, studentId: 4, experience: SkillExperience.Intermediate }
+      ]
+    },
+    {
+      id: 5,
+      first_name: "Khalid",
+      last_name: "Ali",
+      email: "khalid.ali@example.com",
+      password: "",
+      role: "student",
+      major: "Software Engineering",
+      university: "Al-Ahliyya Amman University",
+      experience: null,
+      gpa: 78,
+      graduationYear: 2027,
+      linkedInUrl: "https://linkedin.com/in/khalidali",
+      gitHubUrl: null,
+      certifications: [],
+      cvUrl: null,
+      phone: "0789876543",
+      studentSkills: [
+        { skill_id: 2, studentId: 5, experience: SkillExperience.Beginner },
+        { skill_id: 3, studentId: 5, experience: SkillExperience.Intermediate }
+      ]
+    },
+    {
+      id: 6,
+      first_name: "Rania",
+      last_name: "Yousef",
+      email: "rania.yousef@example.com",
+      password: "",
+      role: "student",
+      major: "Computer Science",
+      university: "University of Jordan",
+      experience: "Research Assistant at UJ AI Lab",
+      gpa: 95,
+      graduationYear: 2025,
+      linkedInUrl: "https://linkedin.com/in/raniayousef",
+      gitHubUrl: "https://github.com/raniayousef",
+      certifications: ["SQL Fundamentals", "Angular Basics", "C# Programming"],
+      cvUrl: "https://example.com/cv/rania.pdf",
+      phone: "0771122334",
+      studentSkills: [
+        { skill_id: 1, studentId: 6, experience: SkillExperience.Expert },
+        { skill_id: 2, studentId: 6, experience: SkillExperience.Expert },
+        { skill_id: 3, studentId: 6, experience: SkillExperience.Intermediate }
       ]
     }
   ];
@@ -248,70 +344,111 @@ export class RecruiterDashboard {
 
   //  applications
   applications: Application[] = [
-    { id: 1, studentId: 1, internshipId: 1, status: Status.Pending, matchScore: 90 },
-    { id: 2, studentId: 1, internshipId: 2, status: Status.Accepted, matchScore: 80 },
-    { id: 3, studentId: 2, internshipId: 1, status: Status.Rejected, matchScore: 30 }
+    // Internship 1 (Frontend Intern)
+    { id: 1,  studentId: 1, internshipId: 1, status: Status.Pending,  matchScore: 90 },
+    { id: 2,  studentId: 2, internshipId: 1, status: Status.Rejected, matchScore: 30 },
+    { id: 3,  studentId: 3, internshipId: 1, status: Status.Pending,  matchScore: 75 },
+    { id: 4,  studentId: 6, internshipId: 1, status: Status.Accepted, matchScore: 95 },
+    // Internship 2 (Frontend Intern)
+    { id: 5,  studentId: 1, internshipId: 2, status: Status.Accepted, matchScore: 80 },
+    { id: 6,  studentId: 4, internshipId: 2, status: Status.Accepted, matchScore: 88 },
+    { id: 7,  studentId: 5, internshipId: 2, status: Status.Pending,  matchScore: 62 },
+    // Internship 3 (Frontend Intern)
+    { id: 8,  studentId: 4, internshipId: 3, status: Status.Pending,  matchScore: 71 },
+    { id: 9,  studentId: 6, internshipId: 3, status: Status.Accepted, matchScore: 93 },
+    // Internship 5 (Frontend Intern)
+    { id: 10, studentId: 3, internshipId: 5, status: Status.Pending,  matchScore: 68 },
+    { id: 11, studentId: 5, internshipId: 5, status: Status.Rejected, matchScore: 44 },
+    // Internship 8 (Backend Intern)
+    { id: 12, studentId: 2, internshipId: 8, status: Status.Pending,  matchScore: 85 },
+    { id: 13, studentId: 5, internshipId: 8, status: Status.Accepted, matchScore: 77 },
+    { id: 14, studentId: 6, internshipId: 8, status: Status.Pending,  matchScore: 91 },
   ];
 
 
-  setSection(sectionName: string): void {
-    this.breadcrumpSectionName = sectionName
+  // TODO (Backend): Replace with API call
+  // GET /api/internships?active=true&sort=deadline&limit=2
+  getClosingSoon(): Internship[] {
+    return [...this.internships]
+      .filter(i => i.active)
+      .sort((a, b) => new Date(a.submissionDeadline).getTime() - new Date(b.submissionDeadline).getTime())
+      .slice(0, 2);
   }
 
-  // Get internship title
+  // TODO (Backend): Replace with API call
+  // GET /api/applications?sort=matchScore&limit=2
+  getTopCandidates(): Application[] {
+    return [...this.applications]
+      .sort((a, b) => b.matchScore - a.matchScore)
+      .slice(0, 2);
+  }
+
+  // TODO (Backend): Replace with API call
+  // GET /api/students/{id}
+  getStudentById(id: number): Student | undefined {
+    return this.students.find(s => s.id === id);
+  }
+
+  setSection(sectionName: string): void {
+    this.breadcrumpSectionName = sectionName;
+  }
+
   getInternshipName(internshipId: number): string {
     return this.internships.find(i => i.id === internshipId)?.title ?? 'Unknown';
   }
 
-  // Get students for a specific internship
-  getApplicants(internshipId: number): Student[] {
-    const studentIds = this.applications
-      .filter(app => app.internshipId === internshipId)
-      .map(app => app.studentId);
-
-    this.applicants = this.students.filter(student => studentIds.includes(student.id));
-
-    return this.applicants
+  // TODO (Backend): Replace with API call
+  // GET /api/applications?internshipId={internshipId}
+  getApplicationsForInternship(internshipId: number): Application[] {
+    return this.applications.filter(a => a.internshipId === internshipId);
   }
 
-  // Get the status of a specific student for a specific internship
-  getApplicationStatusForStudent(studentId: number, internshipId: number): string {
-    const application = this.applications.find(
-      app => app.studentId === studentId && app.internshipId === internshipId
-    );
-    return application ? Status[application.status] : Status[0];
-  }
-  changePage(pageNumber: number) {
-    this.paginationConfig.currentPage = pageNumber
+  // TODO (Backend): Open modal then GET /api/students/{studentId} if not already loaded
+  studentInfo(studentId: number, application: Application) {
+    this.applicationModalApplication = { ...application };
+    this.applicationModalStudent = this.students.find(x => x.id === studentId);
   }
 
-  studentInfo(applicantId: number, application: any) {
-    this.applicationModalApplication = application
-    const foundStudent = this.applications.find(s => s.id === applicantId);
-    this.applicationModalStudent = this.students.find(x => x.id == foundStudent?.id)
+  // TODO (Backend): Replace computed counts with API aggregates
+  // GET /api/applications/stats?internshipId={id}
+  countPending(internshipId: number): number {
+    return this.applications.filter(x => x.internshipId === internshipId && x.status === Status.Pending).length;
   }
 
-  openModal() {
-    this.postInternshipModal.nativeElement.Show()
-  }
-  countPending(applicationId: number): number {
-    return this.applications.filter(x => x.internshipId == applicationId && x.status == 0).length ?? 0;
+  countAccepted(internshipId: number): number {
+    return this.applications.filter(x => x.internshipId === internshipId && x.status === Status.Accepted).length;
   }
 
-  countAccepted(applicationId: number): number {
-    return this.applications.filter(x => x.internshipId == applicationId && x.status == 1).length ?? 0;
+  // TODO (Backend): Replace with API aggregates
+  // GET /api/dashboard/stats (returns activeInternships, totalApplicants, pending, accepted)
+  totalApplicants(): number {
+    return this.applications.length;
   }
-  totalApplicants() {
-    return this.applications.length ?? 0
+
+  totalPending(): number {
+    return this.applications.filter(x => x.status === Status.Pending).length;
   }
-  totalPending() {
-    return this.applications.filter(x => x.status == 0).length ?? 0
+
+  totalAccepted(): number {
+    return this.applications.filter(x => x.status === Status.Accepted).length;
   }
-  totalAccepted() {
-    return this.applications.filter(x => x.status == 1).length ?? 0
+
+  activeInternships(): number {
+    return this.internships.filter(x => x.active === true).length;
   }
-  activeInternships() {
-    return this.internships.filter(x => x.active == true).length ?? 0
+
+  // TODO (Backend): Call API then update local state on success
+  // PUT /api/applications/{id}/status   Body: { status: number }
+  updateApplicationStatus(status: number): void {
+    if (!this.applicationModalApplication) return;
+
+    const index = this.applications.findIndex(a => a.id === this.applicationModalApplication!.id);
+    if (index === -1) return;
+
+    // Update in the local array
+    this.applications[index] = { ...this.applications[index], status };
+    // Keep the modal reference in sync so the badge updates immediately
+    this.applicationModalApplication = { ...this.applicationModalApplication, status };
   }
   searchSkill(query: string) {
     this.searchQuery = query
@@ -355,6 +492,13 @@ export class RecruiterDashboard {
     return this.skills.find(s => s.skill_id === id)?.skill_name ?? 'Unknown';
   }
 
+  // TODO (Backend): Replace with API call
+  // GET /api/skills
+  searchSkillsFromBackend(_query: string) {
+    // TODO (Backend): GET /api/skills?search={_query}
+    // this.skillService.search(_query).subscribe(results => this.searchSkills = results);
+  }
+
   clearModal() {
     this.internship_form.reset();
     this.skillsTouched = false;
@@ -363,9 +507,13 @@ export class RecruiterDashboard {
     this.searchSkills = [];
     this.isEditing = false;
     this.editingId = null;
-    this.postInternshipModal.nativeElement.close;
-    this.submitBtn.nativeElement.click()
   }
+
+  private closeModal() {
+    const modal = (window as any).bootstrap?.Modal?.getInstance(this.postInternshipModal.nativeElement);
+    modal?.hide();
+  }
+
   postInternship() {
     if (this.internship_form.invalid) return;
     if (this.pendingSkills.length === 0) {
@@ -374,12 +522,14 @@ export class RecruiterDashboard {
     }
 
     if (this.isEditing && this.editingId !== null) {
-      // UPDATE existing internship
+      // TODO (Backend): PUT /api/internships/{editingId}   Body: updated internship object
+      // this.internshipService.update(this.editingId, payload).subscribe(updated => { ... });
       const index = this.internships.findIndex(x => x.id === this.editingId);
       if (index !== -1) {
         this.internships[index] = {
-          ...this.internships[index],                          // keep original fields like postDate, id
+          ...this.internships[index],
           title: this.internship_form.value.title!,
+          companyName: this.internship_form.value.companyName!,
           description: this.internship_form.value.description!,
           submissionDeadline: new Date(this.internship_form.value.submissionDeadline!),
           duration: this.internship_form.value.duration!,
@@ -389,10 +539,12 @@ export class RecruiterDashboard {
         };
       }
     } else {
-      // CREATE new internship
+      // TODO (Backend): POST /api/internships   Body: newInternship object
+      // this.internshipService.create(payload).subscribe(created => this.internships.push(created));
       const newInternship: Internship = {
         id: this.internships.length + 1,
         companyId: this.internship_form.value.companyId!,
+        companyName: this.internship_form.value.companyName!,
         title: this.internship_form.value.title!,
         description: this.internship_form.value.description!,
         postDate: new Date(),
@@ -406,12 +558,16 @@ export class RecruiterDashboard {
       this.internships.push(newInternship);
     }
 
+    this.closeModal();
     this.clearModal();
   }
 
   editInternship(internship: Internship) {
+    this.isEditing = true;
+    this.editingId = internship.id;
     this.internship_form.patchValue({
       title: internship.title,
+      companyName: internship.companyName ?? '',
       description: internship.description,
       submissionDeadline: internship.submissionDeadline.toISOString().split('T')[0],
       duration: internship.duration,
@@ -424,6 +580,8 @@ export class RecruiterDashboard {
     this.pendingSkills = [...internship.skills];
   }
   deleteInternship(internship_id: number) {
+    // TODO (Backend): DELETE /api/internships/{internship_id}
+    // this.internshipService.delete(internship_id).subscribe(() => { ... });
     this.internships = this.internships.filter(x => x.id !== internship_id);
   }
 }

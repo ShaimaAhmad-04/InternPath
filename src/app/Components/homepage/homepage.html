@@ -3,27 +3,30 @@
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-lg-8">
-                    <div class="hero-icon-wrapper fade-up" appReveal>
-                        <div class="icon-container">
-                            <i class="bi bi-suitcase-lg hero-icon"></i>
-                        </div>
+
+                    <!-- Hero icon -->
+                    <div class="hero-icon-wrapper mx-auto mb-4">
+                        <i class="bi bi-suitcase-lg hero-briefcase-icon"></i>
                     </div>
+
                     <h1 class="title-heading">
                         Find Your Perfect <span class="gradient-text">Internship</span>
                     </h1>
                     <p class="subtitle hero-subtitle">
-                        AI-powered platform connecting Jordanian students with top 
+                        AI-powered platform connecting Jordanian students with top
                         internship opportunities. Get matched, get guided, get hired.
                     </p>
                     <div class="introduction-buttons mt-4">
-                        <button type="button" class="btn colored-background btn-with-icon me-3" routerLink="/signup">
-                            <span>Get Started For Free</span>
+                        <button type="button" class="btn colored-background btn-with-icon me-3" routerLink="/internships">
+                            <span>Browse Internships</span>
                             <i class="bi bi-arrow-right arrow-icon"></i>
                         </button>
                         <button type="button" class="btn btn-outline-dark" routerLink="/internships">
-                            View opportunities
+                            View Opportunities
                         </button>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -37,30 +40,47 @@
             </div>
 
             <div class="row g-4 justify-content-center">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 slide-left" appReveal [delay]="1.4">
-                    <div class="card h-100 shadow-sm border-0">
+                <div class="col-12 col-sm-6 col-lg-3 slide-left" appReveal [delay]="1.4">
+                    <div class="card h-100 shadow-sm border-0 feature-card">
                         <div class="card-body">
-                            <i class="bi bi-stars fs-2 mb-3 d-block" style="color: #840aad;"></i>
-                            <h5 class="card-title">AI-Powered Roadmaps</h5>
-                            <p class="card-text subtitle small">Advanced algorithms match you with internships that fit your skills perfectly.</p>
+                            <div class="feature-icon-wrap mb-3" style="background:#f3e8ff;">
+                                <i class="bi bi-stars" style="color:#840aad;"></i>
+                            </div>
+                            <h5 class="card-title">AI-Powered Matching</h5>
+                            <p class="card-text subtitle small">Advanced algorithms match you with internships that fit your skills and career goals perfectly.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 slide-left" appReveal [delay]="1.6">
-                    <div class="card h-100 shadow-sm border-0">
+                <div class="col-12 col-sm-6 col-lg-3 slide-left" appReveal [delay]="1.6">
+                    <div class="card h-100 shadow-sm border-0 feature-card">
                         <div class="card-body">
-                            <i class="bi bi-bullseye fs-2 mb-3 d-block" style="color: #ff0069;"></i>
-                            <h5 class="card-title">Accurate Matching</h5>
-                            <p class="card-text subtitle small">Get custom learning paths to acquire the skills you need.</p>
+                            <div class="feature-icon-wrap mb-3" style="background:#fff0f6;">
+                                <i class="bi bi-map" style="color:#ff0069;"></i>
+                            </div>
+                            <h5 class="card-title">Personalized Roadmaps</h5>
+                            <p class="card-text subtitle small">Get custom learning paths to acquire the skills you need for your dream internship.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3 slide-left" appReveal [delay]="1.8">
-                    <div class="card h-100 shadow-sm border-0">
+                <div class="col-12 col-sm-6 col-lg-3 slide-left" appReveal [delay]="1.8">
+                    <div class="card h-100 shadow-sm border-0 feature-card">
                         <div class="card-body">
-                            <i class="bi bi-clipboard2-check-fill fs-2 mb-3 d-block" style="color: #3333dc;"></i>
-                            <h5 class="card-title">Track Applications</h5>
-                            <p class="card-text subtitle small">Know exactly how well you match before applying.</p>
+                            <div class="feature-icon-wrap mb-3" style="background:#e8f0ff;">
+                                <i class="bi bi-graph-up-arrow" style="color:#3333dc;"></i>
+                            </div>
+                            <h5 class="card-title">Real-time Matching Scores</h5>
+                            <p class="card-text subtitle small">Know exactly how well you match with each internship before applying.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 slide-left" appReveal [delay]="2.0">
+                    <div class="card h-100 shadow-sm border-0 feature-card">
+                        <div class="card-body">
+                            <div class="feature-icon-wrap mb-3" style="background:#e8fff0;">
+                                <i class="bi bi-shield-check" style="color:#1a8f3c;"></i>
+                            </div>
+                            <h5 class="card-title">Verified Companies</h5>
+                            <p class="card-text subtitle small">Apply only to verified and trusted companies in Jordan and beyond.</p>
                         </div>
                     </div>
                 </div>
@@ -76,10 +96,15 @@
 
                 <div class="benefit-item d-flex align-items-start mb-4 pop-left" appReveal [delay]="0.4">
                     <div class="benefit-icon-box me-3"><i class="bi bi-lightning-charge"></i></div>
-                    <div><h6 class="fw-bold mb-1">Save Time</h6><p class="text-muted small">No more scrolling through irrelevant postings</p></div>
+                    <div><h6 class="fw-bold mb-1">Save Time</h6><p class="text-muted small">No more scrolling through hundreds of irrelevant postings</p></div>
                 </div>
 
                 <div class="benefit-item d-flex align-items-start mb-4 pop-left" appReveal [delay]="0.6">
+                    <div class="benefit-icon-box me-3"><i class="bi bi-shield"></i></div>
+                    <div><h6 class="fw-bold mb-1">Verified Opportunities</h6><p class="text-muted small">All internships are verified by our admin team</p></div>
+                </div>
+
+                <div class="benefit-item d-flex align-items-start mb-4 pop-left" appReveal [delay]="0.8">
                     <div class="benefit-icon-box me-3"><i class="bi bi-rocket-takeoff"></i></div>
                     <div><h6 class="fw-bold mb-1">Career Growth</h6><p class="text-muted small">Get personalized guidance to advance your career</p></div>
                 </div>
@@ -112,4 +137,3 @@
             </div>
         </div>
     </div>
-</div>
