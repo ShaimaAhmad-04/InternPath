@@ -3,12 +3,7 @@
   <div class="navbar__brand">
     <a class="navbar__brand-link" routerLink="/homepage">
       <div class="navbar__logo-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <rect x="3" y="3" width="7" height="7" rx="1"/>
-          <rect x="14" y="3" width="7" height="7" rx="1"/>
-          <rect x="3" y="14" width="7" height="7" rx="1"/>
-          <rect x="14" y="14" width="7" height="7" rx="1"/>
-        </svg>
+        <i class="bi bi-suitcase-lg navbar__logo-suitcase"></i>
       </div>
       <span class="navbar__brand-text">InternPath</span>
     </a>
@@ -83,4 +78,6 @@
 
 </nav>
 
-<router-outlet></router-outlet>
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

@@ -4,6 +4,7 @@ import { InternshipSkill } from './internshipSkill'
 export interface Internship {
   id: number;
   companyId: number;
+  companyName?: string;
   title: string;
   description?: string;
   postDate: Date;

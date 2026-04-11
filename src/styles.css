@@ -49,6 +49,14 @@ body {
     overflow-x: hidden;
 }
 
+/* Ensure modals appear above the fixed navbar */
+.modal-backdrop {
+    z-index: 10000 !important;
+}
+.modal {
+    z-index: 10001 !important;
+}
+
 /* Enforce top fixed app navbar globally */
 .navbar {
     position: fixed !important;
@@ -68,7 +76,7 @@ body {
 
 .main-content,
 app-root .main-content {
-    padding-top: 72px !important;
+    padding-top: 64px !important;
 }
 
 .navbar__brand-link,
@@ -80,9 +88,29 @@ app-root .main-content {
 }
 
 .navbar__logo-icon {
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 8px !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, #a120ea, #fe007a) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+.navbar__logo-suitcase {
+    font-size: 1.1rem !important;
+    color: #ffffff !important;
+    line-height: 1 !important;
+}
+
+.navbar__brand-text {
+    background: linear-gradient(to right, #a120ea, #fe007a) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
 }
 
 .navbar__logo-icon svg,
