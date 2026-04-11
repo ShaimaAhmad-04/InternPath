@@ -17,4 +17,6 @@ router.delete("/skills/:skillId", authenticate, authorizeRole(0), removeStudentS
 router.get("/applications", authenticate, authorizeRole(0), getStudentApplications)
 router.get("/roadmaps", authenticate, authorizeRole(0), getStudentRoadmaps)
 
+
+
 export default router
