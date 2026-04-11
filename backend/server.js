@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js'; // Import auth routes module.
 import listingRoutes from './routes/listingRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
 import companyRoutes from './routes/companyRoutes.js'
+import skillRoutes from './routes/skillRoutes.js'
 
 const app = express(); // Create an Express app instance.
 const PORT = 5002; // Define server port.
@@ -24,6 +25,7 @@ app.use('/auth', authRoutes); // Mount auth routes under /auth prefix.
 app.use('/listings',listingRoutes);
 app.use('/student', studentRoutes);
 app.use('/company', companyRoutes);
+app.use('/skills', skillRoutes)
 app.listen(PORT, () => { // Start server and listen on PORT.
   console.log(`Server running on http://localhost:${PORT}`); // Log server URL when started.
 });
