@@ -48,3 +48,7 @@ backend/middleware/Middlewareexample.js
 .env
 .venv/
 __pycache__/
+
+Frontend_backup/
+src_backup/
+public_backup/
