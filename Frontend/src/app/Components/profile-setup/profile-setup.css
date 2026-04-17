@@ -45,7 +45,7 @@
   padding: 40px;
   max-width: 720px;
   margin: 0 auto;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -83,8 +83,14 @@
   gap: 8px;
 }
 
-.upload-zone:hover { border-color: #7c3aed; }
-.upload-zone.uploaded { border-color: #16a34a; background: #f0fdf4; }
+.upload-zone:hover {
+  border-color: #7c3aed;
+}
+
+.upload-zone.uploaded {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
 
 .upload-text {
   font-size: 15px;
@@ -142,7 +148,9 @@
   transition: color 0.2s;
 }
 
-.remove-skill:hover { color: #dc2626; }
+.remove-skill:hover {
+  color: #dc2626;
+}
 
 .skills-hint {
   font-size: 13px;
@@ -170,7 +178,10 @@
   transition: border-color 0.2s;
 }
 
-.add-skill-row input:focus { border-color: #7c3aed; background: white; }
+.add-skill-row input:focus {
+  border-color: #7c3aed;
+  background: white;
+}
 
 .btn-add {
   width: 44px;
@@ -184,7 +195,10 @@
   transition: background 0.2s;
 }
 
-.btn-add:hover { background: #7c3aed; color: white; }
+.btn-add:hover {
+  background: #7c3aed;
+  color: white;
+}
 
 .btn-continue {
   width: 100%;
@@ -200,7 +214,9 @@
   margin-top: 8px;
 }
 
-.btn-continue:hover { opacity: 0.85; }
+.btn-continue:hover {
+  opacity: 0.85;
+}
 
 /* STEP 2 FORM */
 .form-row {
@@ -215,7 +231,9 @@
   gap: 8px;
 }
 
-.form-group.full { width: 100%; }
+.form-group.full {
+  width: 100%;
+}
 
 .form-group label {
   font-size: 14px;
@@ -244,7 +262,9 @@
   background: white;
 }
 
-.form-group textarea { resize: vertical; }
+.form-group textarea {
+  resize: vertical;
+}
 
 .step2-buttons {
   display: flex;
@@ -265,7 +285,10 @@
   transition: border-color 0.2s;
 }
 
-.btn-back:hover { border-color: #7c3aed; color: #7c3aed; }
+.btn-back:hover {
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
 
 .btn-complete {
   flex: 1;
@@ -280,9 +303,45 @@
   transition: opacity 0.2s;
 }
 
-.btn-complete:hover { opacity: 0.9; }
+.btn-complete:hover {
+  opacity: 0.9;
+}
 
 @media (max-width: 600px) {
-  .form-row { grid-template-columns: 1fr; }
-  .setup-card { padding: 24px 20px; }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .setup-card {
+    padding: 24px 20px;
+  }
+}
+
+.btn-continue:hover:not(:disabled) {
+  background: #1f2937;
+  opacity: 0.9;
+}
+
+/* Disabled State */
+.btn-continue:disabled {
+  background: #9ca3af;
+  /* Gray color */
+  color: #f3f4f6;
+  cursor: not-allowed;
+  /* Shows the "red circle" cursor */
+  opacity: 0.7;
+  transform: none;
+  /* Prevents any hover scales if you had them */
+}
+
+.form-group input {
+  color: #111827;
+  /* Dark black for actual data */
+  font-weight: 500;
+}
+
+.form-group input::placeholder {
+  color: #9ca3af;
+  /* Light gray for placeholders */
+  font-weight: 400;
 }

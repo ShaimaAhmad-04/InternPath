@@ -21,9 +21,10 @@ export const register = async (req, res) => {
         phoneNumber,
         password: hashedPassword,
         role,
-
-        ...(role === 1 && { student: { create: {} } }),
-        ...(role === 2 && { company: { create: { name: firstName } } })
+        //this create a student or company object based on role after registeration
+        //at first both objects are empty. then they get filled after student/company complete their profile and send request to update student/company routes
+        ...(role === 0 && { student: { create: {} } }),
+        ...(role === 1 && { company: { create: { name: firstName } } })
       },
       select: {
         id: true,

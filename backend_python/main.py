@@ -1,60 +1,46 @@
-from dotenv import load_dotenv
-import os
+import fitz  # PyMuPDF
 import json
-import fitz  # For PDFs
-from docx2python import docx2python  # For DOCX
-import prompts
-from config import Config
 from openai import OpenAI
-from dotenv import load_dotenv
+from config import Config
+import prompts
 
-load_dotenv()  # ensure env vars are loaded first
-client = OpenAI(api_key=Config.API_KEY, base_url=Config.BASE_URL)
+# Initialize Client
+client = OpenAI(api_key=Config.API_KEY, base_url="https://api.groq.com/openai/v1")  # Added Groq base URL if using Groq
 
 
-def extract_text(file_path):
-  """Detects file type and extracts text accordingly."""
-  ext = os.path.splitext(file_path)[1].lower()
-
-  if ext == ".pdf":
-    doc = fitz.open(file_path)
-    return "\n".join([page.get_text() for page in doc])
-
-  elif ext == ".docx":
-    with docx2python(file_path) as docx_content:
-      return docx_content.text
-
-  else:
-    raise ValueError(f"Unsupported file extension: {ext}")
+def extract_text_from_pdf(pdf_path):
+  """Handles the PDF extraction logic."""
+  doc = fitz.open(pdf_path)
+  text = ""
+  for page in doc:
+    text += page.get_text() + "\n"
+  return text
 
 
 def parse_resume(full_text):
   """Handles the AI API call logic."""
   response = client.chat.completions.create(
-    model=Config.MODEL_NAME,
+    model=Config.MODEL,
     messages=[
       {"role": "system", "content": prompts.SYSTEM_MESSAGE},
       {"role": "user", "content": prompts.get_resume_prompt(full_text)},
     ],
     response_format={'type': 'json_object'}
   )
-  # Convert string response to Python Dictionary
   return json.loads(response.choices[0].message.content)
 
 
 if __name__ == "__main__":
-  # Ensure this path is correct on your machine
-  path = "C:/Users/Ahmad/OneDrive/Desktop/Career/Shaima Ahmad 0782020517.docx"
+  path = "C:/Users/Ahmad/Downloads/archive/data/data/FINANCE/26961846.pdf"
 
   try:
-    # 1. Get the text based on file type
-    raw_text = extract_text(path)
+    # Step 1: Extract
+    raw_text = extract_text_from_pdf(path)
 
-    # 2. Parse with AI
+    # Step 2: Parse
     structured_data = parse_resume(raw_text)
 
-    # 3. Print the result
-    print("\n--- Structured Data ---")
+    # Step 3: Result
     print(json.dumps(structured_data, indent=2))
 
   except Exception as e:

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-isLoggedIn = false;
+
   email = '';
   password = '';
   errorMessage = '';
@@ -28,11 +28,10 @@ isLoggedIn = false;
     this.errorMessage = 'Invalid credentials. (connect to backend)';
   }
 
-loginAsStudent(): void {
-  localStorage.setItem('isLoggedIn', 'true');
-  localStorage.setItem('userName', 'Sama');
-  this.router.navigate(['/homepage']);
-}
+  loginAsStudent(): void {
+    // CONNECT TO BACKEND: AUTO-LOGIN WITH STUDENT DEMO ACCOUNT TOKEN
+    this.router.navigate(['/profile-setup']);
+  }
 
   loginAsRecruiter(): void {
     // CONNECT TO BACKEND: AUTO-LOGIN WITH RECRUITER DEMO ACCOUNT TOKEN

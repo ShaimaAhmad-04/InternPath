@@ -46,9 +46,3 @@ backend/controllers/exampleting.js
 backend/middleware/Middlewareexample.js
 
 .env
-.venv/
-__pycache__/
-
-Frontend_backup/
-src_backup/
-public_backup/
